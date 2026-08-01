@@ -20133,15 +20133,16 @@
     "client": "Harcourts Victoria Point",
     "address": "1 Fir St, Victoria Point QLD 4165",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$115",
     "subscriptionExpires": "",
-    "lastInspected": "30/04/2026",
+    "lastInspected": "29/04/2026",
     "scheduled": "",
     "compliant": "NO",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "CFS-1260",
