@@ -187,6 +187,7 @@ async function loadData() {
     DATA = JSON.parse(decoded);
     localStorage.setItem('compass_mobile_data', JSON.stringify(DATA));
     document.getElementById('loading-msg').style.display = 'none';
+    populateAgents();
     renderStats();
     render();
   } catch(e) {
@@ -197,6 +198,7 @@ async function loadData() {
       DATA = JSON.parse(cached);
     }
     document.getElementById('loading-msg').textContent = DATA.length ? 'Offline — showing cached data' : 'Could not load data';
+    populateAgents();
     renderStats();
     render();
   }
@@ -237,18 +239,24 @@ function getPropStatus(p) {
   return 'ok';
 }
 
-// Filter active only for risk views
-const activeProps = DATA.filter(p => p.active === 'YES');
+// Filter active only for risk views - computed dynamically
+function getActiveProps() {
+  return DATA.filter(p => p.active === 'YES');
+}
 
-// Populate agent filter
-const agents = [...new Set(activeProps.map(p => p.client).filter(Boolean))].sort();
-const agentSel = document.getElementById('agent-filter');
-agents.forEach(a => {
-  const o = document.createElement('option'); o.value = a; o.textContent = a; agentSel.appendChild(o);
-});
+// Populate agent filter - called after data loads
+function populateAgents() {
+  const agentSel = document.getElementById('agent-filter');
+  agentSel.innerHTML = '<option value="">All Agents</option>';
+  const agents = [...new Set(getActiveProps().map(p => p.client).filter(Boolean))].sort();
+  agents.forEach(a => {
+    const o = document.createElement('option'); o.value = a; o.textContent = a; agentSel.appendChild(o);
+  });
+}
 
 // Stats
 function renderStats() {
+  const activeProps = getActiveProps();
   const overdue = activeProps.filter(p => { const d = daysDiff(p.subscriptionExpires); return d !== null && d < 0; }).length;
   const due30 = activeProps.filter(p => { const d = daysDiff(p.subscriptionExpires); return d !== null && d >= 0 && d <= 30; }).length;
   const ok = activeProps.filter(p => { const d = daysDiff(p.subscriptionExpires); return d !== null && d > 30; }).length;
