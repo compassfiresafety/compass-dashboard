@@ -177,7 +177,7 @@ async function loadData() {
   try {
     const res = await fetch('https://api.github.com/repos/compassfiresafety/compass-dashboard/contents/data.json', {
       headers: {
-        'Authorization': 'token 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',
+        'Authorization': 'token ' + GITHUB_TOKEN,
         'Accept': 'application/vnd.github.v3+json'
       }
     });
