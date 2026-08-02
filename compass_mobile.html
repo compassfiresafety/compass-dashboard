@@ -168,8 +168,8 @@
     </div>
     <!-- Tabs -->
     <div style="display:flex;border-bottom:1px solid #e2e8f0;padding:0 20px">
-      <button id="m-tab-details" onclick="switchMobileTab('details')" style="padding:8px 16px;font-size:13px;font-weight:600;border:none;background:none;color:#f97316;border-bottom:2px solid #f97316;cursor:pointer">Details</button>
-      <button id="m-tab-history" onclick="switchMobileTab('history')" style="padding:8px 16px;font-size:13px;font-weight:600;border:none;background:none;color:#64748b;border-bottom:2px solid transparent;cursor:pointer">📋 History</button>
+      <button id="m-tab-details" onclick="switchMobileTab('details');event.stopPropagation()" style="padding:8px 16px;font-size:13px;font-weight:600;border:none;background:none;color:#f97316;border-bottom:2px solid #f97316;cursor:pointer">Details</button>
+      <button id="m-tab-history" onclick="switchMobileTab('history');event.stopPropagation()" style="padding:8px 16px;font-size:13px;font-weight:600;border:none;background:none;color:#64748b;border-bottom:2px solid transparent;cursor:pointer">📋 History</button>
     </div>
     <div class="detail-body" id="d-body"></div>
     <!-- History Panel -->
@@ -573,7 +573,7 @@ function showDetail(id) {
 }
 
 function closeDetail(e) {
-  if (!e || e.target === document.getElementById('detail-overlay') || e.type === 'click') {
+  if (!e || e.target === document.getElementById('detail-overlay')) {
     document.getElementById('detail-overlay').classList.remove('open');
     document.body.style.overflow = '';
   }
