@@ -399,56 +399,57 @@ function render() {
 
 // ===== MOBILE HISTORY =====
 const HISTORY_API = 'https://api.github.com/repos/compassfiresafety/compass-dashboard/contents/history.json';
-let _history = null;
-let _historySHA = null;
 let _historyTimer = null;
 let _currentPropId = null;
 
 async function loadHistory() {
-  if (_history) return _history;
   try {
-    const res = await fetch(HISTORY_API, {
-      headers: {
-        'Authorization': 'token ' + atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join(''),
-        'Accept': 'application/vnd.github.v3+json'
-      }
+    const res = await fetch(HISTORY_API + '?t=' + Date.now(), {
+      headers: { 'Authorization': 'token ' + atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join(''), 'Accept': 'application/vnd.github.v3+json' }
     });
-    if (res.status === 404) { _history = {}; return _history; }
+    if (res.status === 404) return {};
     const meta = await res.json();
-    _historySHA = meta.sha;
-    _history = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g, '')))));
-    localStorage.setItem('compass_history', JSON.stringify(_history));
-    return _history;
+    const data = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g, '')))));
+    localStorage.setItem('compass_history', JSON.stringify(data));
+    localStorage.setItem('compass_history_sha', meta.sha);
+    return data;
   } catch(e) {
     const cached = localStorage.getItem('compass_history');
-    _history = cached ? JSON.parse(cached) : {};
-    return _history;
+    return cached ? JSON.parse(cached) : {};
   }
 }
 
-async function saveHistory() {
-  localStorage.setItem('compass_history', JSON.stringify(_history));
-  clearTimeout(_historyTimer);
-  _historyTimer = setTimeout(async () => {
-    try {
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(_history, null, 2))));
-      const body = { message: 'Update property history', content, branch: 'main' };
-      if (_historySHA) body.sha = _historySHA;
-      const res = await fetch(HISTORY_API, {
-        method: 'PUT',
-        headers: {
-          'Authorization': 'token ' + atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join(''),
-          'Accept': 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
-      if (res.ok) {
-        const result = await res.json();
-        _historySHA = result.content.sha;
-      }
-    } catch(e) { console.warn('History save failed:', e); }
-  }, 2000);
+async function getHistorySHA() {
+  const cached = localStorage.getItem('compass_history_sha');
+  if (cached) return cached;
+  try {
+    const res = await fetch(HISTORY_API, {
+      headers: { 'Authorization': 'token ' + atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join(''), 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (!res.ok) return null;
+    const meta = await res.json();
+    localStorage.setItem('compass_history_sha', meta.sha);
+    return meta.sha;
+  } catch(e) { return null; }
+}
+
+async function saveHistory(data) {
+  localStorage.setItem('compass_history', JSON.stringify(data));
+  try {
+    const sha = await getHistorySHA();
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    const body = { message: 'Update property history', content, branch: 'main' };
+    if (sha) body.sha = sha;
+    const res = await fetch(HISTORY_API, {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join(''), 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (res.ok) {
+      const result = await res.json();
+      localStorage.setItem('compass_history_sha', result.content.sha);
+    }
+  } catch(e) { console.warn('History save failed:', e); }
 }
 
 function switchMobileTab(tab) {
@@ -460,7 +461,7 @@ function switchMobileTab(tab) {
   detBtn.style.borderBottomColor = tab === 'details' ? '#f97316' : 'transparent';
   hisBtn.style.color = tab === 'history' ? '#f97316' : '#64748b';
   hisBtn.style.borderBottomColor = tab === 'history' ? '#f97316' : 'transparent';
-  if (tab === 'history') { _history = null; renderMobileHistoryList(); }
+  if (tab === 'history') renderMobileHistoryList();
 }
 
 async function renderMobileHistoryList() {
@@ -504,9 +505,8 @@ async function addMobileHistoryEntry() {
   if (!history[_currentPropId]) history[_currentPropId] = [];
   history[_currentPropId].push({ id: Date.now().toString(), date, type, notes, added: new Date().toISOString() });
   document.getElementById('m-h-notes').value = '';
-  await saveHistory();
+  await saveHistory(history);
   renderMobileHistoryList();
-  // Update tab count
   const count = history[_currentPropId].length;
   document.getElementById('m-tab-history').textContent = `📋 History (${count})`;
 }
@@ -516,7 +516,7 @@ async function deleteMobileHistoryEntry(entryId) {
   const history = await loadHistory();
   if (history[_currentPropId]) {
     history[_currentPropId] = history[_currentPropId].filter(e => e.id !== entryId);
-    await saveHistory();
+    await saveHistory(history);
     renderMobileHistoryList();
     const count = history[_currentPropId].length;
     document.getElementById('m-tab-history').textContent = count > 0 ? `📋 History (${count})` : '📋 History';
