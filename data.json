@@ -16775,13 +16775,14 @@
     "key": "N/A",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "16/02/2027",
-    "lastInspected": "16/02/2026",
+    "subscriptionExpires": "15/02/2027",
+    "lastInspected": "15/02/2026",
     "scheduled": "",
-    "compliant": "YES",
-    "alarmCount": "",
+    "compliant": "NO",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5364",
