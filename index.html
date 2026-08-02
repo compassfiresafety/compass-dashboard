@@ -3394,6 +3394,8 @@ async function addHistoryEntry() {
   document.getElementById('h-notes').value = '';
   await saveHistory();
   renderHistoryList();
+  const count = (history[propId] || []).length;
+  document.getElementById('em-tab-history').textContent = `📋 History (${count})`;
   showToast('Entry added', 'success');
 }
 
@@ -3404,6 +3406,8 @@ async function deleteHistoryEntry(propId, entryId) {
     history[propId] = history[propId].filter(e => e.id !== entryId);
     await saveHistory();
     renderHistoryList();
+    const count = (history[propId] || []).length;
+    document.getElementById('em-tab-history').textContent = count > 0 ? `📋 History (${count})` : '📋 History';
   }
 }
 
@@ -3434,6 +3438,13 @@ function openEditModal(idx) {
 
   // Set today's date in history date picker
   document.getElementById('h-date').value = new Date().toISOString().split('T')[0];
+
+  // Show history count on tab
+  loadHistory().then(history => {
+    const count = (history[p.propId||p.id] || []).length;
+    const hisBtn = document.getElementById('em-tab-history');
+    hisBtn.textContent = count > 0 ? `📋 History (${count})` : '📋 History';
+  });
 
   // Always start on Details tab
   switchEditTab('details');
