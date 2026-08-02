@@ -3284,61 +3284,47 @@ function clearDataEntry() {
 }
 
 // ===== EDIT MODAL =====
+
 // ===== PROPERTY HISTORY =====
 const HISTORY_API = 'https://api.github.com/repos/compassfiresafety/compass-dashboard/contents/history.json';
-let _historyTimer = null;
 
-// Always fetch fresh from GitHub — no in-memory cache
 async function loadHistory() {
   try {
     const res = await fetch(HISTORY_API + '?t=' + Date.now(), {
       headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json' }
     });
-    if (res.status === 404) return {};
+    if (res.status === 404) return { data: {}, sha: null };
     const meta = await res.json();
-    const data = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g, '')))));
-    localStorage.setItem('compass_history', JSON.stringify(data));
-    localStorage.setItem('compass_history_sha', meta.sha);
-    return data;
+    const data = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/
+/g, '')))));
+    return { data, sha: meta.sha };
   } catch(e) {
+    console.warn('loadHistory failed:', e);
     const cached = localStorage.getItem('compass_history');
-    return cached ? JSON.parse(cached) : {};
+    return { data: cached ? JSON.parse(cached) : {}, sha: null };
   }
 }
 
-async function getHistorySHA() {
-  const cached = localStorage.getItem('compass_history_sha');
-  if (cached) return cached;
-  try {
-    const res = await fetch(HISTORY_API, {
-      headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json' }
-    });
-    if (!res.ok) return null;
-    const meta = await res.json();
-    localStorage.setItem('compass_history_sha', meta.sha);
-    return meta.sha;
-  } catch(e) { return null; }
-}
-
-async function saveHistory(data) {
+function saveHistoryAsync(data, sha) {
+  // Fire and forget - don't block the UI
   localStorage.setItem('compass_history', JSON.stringify(data));
-  try {
-    const sha = await getHistorySHA();
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-    const body = { message: 'Update property history', content, branch: 'main' };
-    if (sha) body.sha = sha;
-    const res = await fetch(HISTORY_API, {
-      method: 'PUT',
-      headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (!res.ok) throw new Error('save failed');
-    const result = await res.json();
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+  const body = { message: 'Update property history', content, branch: 'main' };
+  if (sha) body.sha = sha;
+  fetch(HISTORY_API, {
+    method: 'PUT',
+    headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  }).then(res => {
+    if (res.ok) return res.json();
+    throw new Error('save failed: ' + res.status);
+  }).then(result => {
     localStorage.setItem('compass_history_sha', result.content.sha);
     showToast('✅ History saved', 'success');
-  } catch(e) {
+  }).catch(e => {
+    console.warn('History save failed:', e);
     showToast('History saved locally only', 'warn');
-  }
+  });
 }
 
 function switchEditTab(tab) {
@@ -3357,7 +3343,7 @@ async function renderHistoryList() {
   const propId = document.getElementById('em-propid-hidden').value;
   const list = document.getElementById('h-list');
   list.innerHTML = '<div style="color:var(--text3);font-size:12px;padding:8px">Loading…</div>';
-  const history = await loadHistory();
+  const { data: history } = await loadHistory();
   const entries = (history[propId] || []).slice().sort((a,b) => b.date.localeCompare(a.date));
   if (entries.length === 0) {
     list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text3);font-size:12px">No history entries yet — add the first one above</div>';
@@ -3371,21 +3357,37 @@ async function renderHistoryList() {
     'Phone Call - Tenant': 'var(--text2)', 'Phone Call - Agent': 'var(--text2)',
     'Tenant Contact': 'var(--text2)', 'Agent Contact': 'var(--text2)', 'Other': 'var(--text2)'
   };
-  list.innerHTML = entries.map((e, i) => {
-    const realIdx = (history[propId] || []).findIndex(x => x.id === e.id);
+  list.innerHTML = entries.map(e => {
     const color = typeColors[e.type] || 'var(--text2)';
     const [y,m,d] = e.date.split('-');
-    const dateStr = `${d}/${m}/${y}`;
     return `<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 4px;border-bottom:1px solid var(--border)">
       <div style="flex-shrink:0;width:3px;align-self:stretch;background:${color};border-radius:2px"></div>
       <div style="flex:1;min-width:0">
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <span style="font-size:11px;font-weight:700;color:var(--text);font-family:'IBM Plex Mono',monospace">${dateStr}</span>
+          <span style="font-size:11px;font-weight:700;color:var(--text);font-family:'IBM Plex Mono',monospace">${d}/${m}/${y}</span>
           <span style="font-size:11px;font-weight:600;color:${color}">${e.type}</span>
         </div>
         ${e.notes ? `<div style="font-size:11px;color:var(--text2);margin-top:2px">${e.notes}</div>` : ''}
       </div>
-      <button onclick="deleteHistoryEntry('${propId}','${e.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:0 4px;flex-shrink:0" title="Delete entry">✕</button>
+      <button onclick="deleteHistoryEntry('${propId}','${e.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:0 4px;flex-shrink:0" title="Delete">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function renderHistoryFromData(propId, entries) {
+  const list = document.getElementById('h-list');
+  if (!entries.length) {
+    list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text3);font-size:12px">No history entries yet</div>';
+    return;
+  }
+  const typeColors = { 'Inspection':'var(--green)','Subscription Invoice':'var(--blue)','Faulty Alarm':'var(--red)','Alarm Repair':'var(--yellow)','Alarm Replacement':'var(--yellow)','Battery Replacement':'var(--yellow)','No Access':'var(--red)','Quote Issued':'var(--purple)' };
+  list.innerHTML = entries.map(e => {
+    const color = typeColors[e.type] || 'var(--text2)';
+    const [y,m,d] = e.date.split('-');
+    return `<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 4px;border-bottom:1px solid var(--border)">
+      <div style="flex-shrink:0;width:3px;align-self:stretch;background:${color};border-radius:2px"></div>
+      <div style="flex:1"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:700;font-family:'IBM Plex Mono',monospace">${d}/${m}/${y}</span><span style="font-size:11px;font-weight:600;color:${color}">${e.type}</span></div>${e.notes?`<div style="font-size:11px;color:var(--text2);margin-top:2px">${e.notes}</div>`:''}</div>
+      <button onclick="deleteHistoryEntry('${propId}','${e.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:0 4px">✕</button>
     </div>`;
   }).join('');
 }
@@ -3397,26 +3399,27 @@ async function addHistoryEntry() {
   const type = document.getElementById('h-type').value;
   const notes = document.getElementById('h-notes').value.trim();
   if (!date) { showToast('Please select a date', 'error'); return; }
-  const history = await loadHistory();
+  const { data: history, sha } = await loadHistory();
   if (!history[propId]) history[propId] = [];
   history[propId].push({ id: Date.now().toString(), date, type, notes, added: new Date().toISOString() });
   document.getElementById('h-notes').value = '';
-  await saveHistory();
-  renderHistoryList();
-  const count = (history[propId] || []).length;
+  saveHistoryAsync(history, sha);
+  const count = history[propId].length;
   document.getElementById('em-tab-history').textContent = `📋 History (${count})`;
-  showToast('Entry added', 'success');
+  // Re-render immediately from local data
+  const entries = history[propId].slice().sort((a,b) => b.date.localeCompare(a.date));
+  renderHistoryFromData(propId, entries);
 }
 
 async function deleteHistoryEntry(propId, entryId) {
   if (!confirm('Delete this history entry?')) return;
-  const history = await loadHistory();
+  const { data: history, sha } = await loadHistory();
   if (history[propId]) {
     history[propId] = history[propId].filter(e => e.id !== entryId);
-    await saveHistory(history);
-    renderHistoryList();
-    const count = (history[propId] || []).length;
+    saveHistoryAsync(history, sha);
+    const count = history[propId].length;
     document.getElementById('em-tab-history').textContent = count > 0 ? `📋 History (${count})` : '📋 History';
+    renderHistoryFromData(propId, history[propId].slice().sort((a,b) => b.date.localeCompare(a.date)));
   }
 }
 
@@ -3449,7 +3452,7 @@ function openEditModal(idx) {
   document.getElementById('h-date').value = new Date().toISOString().split('T')[0];
 
   // Show history count on tab
-  loadHistory().then(history => {
+  loadHistory().then(({data: history}) => {
     const count = (history[p.propId||p.id] || []).length;
     const hisBtn = document.getElementById('em-tab-history');
     hisBtn.textContent = count > 0 ? `📋 History (${count})` : '📋 History';
