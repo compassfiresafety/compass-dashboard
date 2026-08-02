@@ -460,7 +460,7 @@ function switchMobileTab(tab) {
   detBtn.style.borderBottomColor = tab === 'details' ? '#f97316' : 'transparent';
   hisBtn.style.color = tab === 'history' ? '#f97316' : '#64748b';
   hisBtn.style.borderBottomColor = tab === 'history' ? '#f97316' : 'transparent';
-  if (tab === 'history') renderMobileHistoryList();
+  if (tab === 'history') { _history = null; renderMobileHistoryList(); }
 }
 
 async function renderMobileHistoryList() {
