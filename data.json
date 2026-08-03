@@ -5192,13 +5192,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "26/08/2026",
-    "lastInspected": "26/08/2025",
+    "subscriptionExpires": "25/08/2027",
+    "lastInspected": "25/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Upstairs Hall Yes 05/2031"
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Upstairs Hall Yes 05/2031",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2364",
