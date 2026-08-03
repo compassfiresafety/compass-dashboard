@@ -5256,13 +5256,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "30/08/2026",
-    "lastInspected": "17/02/2026",
+    "subscriptionExpires": "29/08/2027",
+    "lastInspected": "16/02/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Downstairs Living Exit Exp 05/2031 $0.00"
+    "alarmNotes": "240v Photo Smoke Alarm Downstairs Living Exit Exp 05/2031 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2388",
