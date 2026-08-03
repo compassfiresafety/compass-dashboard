@@ -20496,5 +20496,22 @@
     "alarmCount": "",
     "alarmBrand": "",
     "alarmNotes": ""
+  },
+  {
+    "id": "prop_1785753065424",
+    "propId": "CFS-1282",
+    "address": "44 Monash St Woodridge 4114",
+    "client": "Red Rocket Prime",
+    "key": "",
+    "active": "YES",
+    "cost": "$110",
+    "subscriptionExpires": "22/07/2027",
+    "lastInspected": "",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
