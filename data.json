@@ -20082,13 +20082,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "01/08/2027",
-    "lastInspected": "04/08/2026",
+    "subscriptionExpires": "10/08/2027",
+    "lastInspected": "03/08/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "CFS-1256",
