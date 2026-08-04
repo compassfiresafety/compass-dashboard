@@ -19931,13 +19931,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "31/07/2027",
-    "lastInspected": "03/08/2026",
+    "subscriptionExpires": "01/08/2027",
+    "lastInspected": "02/08/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "CFS-1247",
