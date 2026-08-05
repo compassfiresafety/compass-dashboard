@@ -20541,5 +20541,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1785911445233",
+    "propId": "CFS-1284",
+    "address": "8/1 Coral St Beenleigh 4207",
+    "client": "Red Rocket Prime",
+    "key": "",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "19/10/2026",
+    "lastInspected": "",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
