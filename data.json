@@ -15482,15 +15482,16 @@
     "client": "Cosmopoliton",
     "address": "70 Lynmouth Street , Upper Mt Gravatt , 4122",
     "key": "N/A",
-    "active": "YES",
+    "active": "NO",
     "cost": "$110",
-    "subscriptionExpires": "01/09/2026",
-    "lastInspected": "09/06/2025",
+    "subscriptionExpires": "31/08/2026",
+    "lastInspected": "08/06/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5283",
