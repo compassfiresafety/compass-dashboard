@@ -15477,23 +15477,6 @@
     "alarmNotes": ""
   },
   {
-    "id": "prop_import_1775337411017_5282",
-    "propId": "prop_import_1775337411017_5282",
-    "client": "Cosmopoliton",
-    "address": "70 Lynmouth Street , Upper Mt Gravatt , 4122",
-    "key": "N/A",
-    "active": "NO",
-    "cost": "$110",
-    "subscriptionExpires": "30/08/2026",
-    "lastInspected": "07/06/2025",
-    "scheduled": "",
-    "compliant": "YES",
-    "alarmCount": 0,
-    "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
-  },
-  {
     "id": "prop_import_1775337411017_5283",
     "propId": "prop_import_1775337411017_5283",
     "client": "Cosmopoliton",
