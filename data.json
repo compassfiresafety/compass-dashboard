@@ -15477,23 +15477,6 @@
     "alarmNotes": ""
   },
   {
-    "id": "prop_import_1775337411017_5283",
-    "propId": "prop_import_1775337411017_5283",
-    "client": "Cosmopoliton",
-    "address": "76 Lutzow Street , Tarragindi , 4121",
-    "key": "N/A",
-    "active": "NO",
-    "cost": "$110",
-    "subscriptionExpires": "30/08/2026",
-    "lastInspected": "09/06/2025",
-    "scheduled": "",
-    "compliant": "YES",
-    "alarmCount": 0,
-    "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
-  },
-  {
     "id": "prop_import_1775337411017_5284",
     "propId": "prop_import_1775337411017_5284",
     "client": "Cosmopoliton",
