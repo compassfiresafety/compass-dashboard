@@ -15516,15 +15516,16 @@
     "client": "Cosmopoliton",
     "address": "38 Hoogley Street , West End , 4101",
     "key": "N/A",
-    "active": "YES",
+    "active": "NO",
     "cost": "$110",
-    "subscriptionExpires": "01/09/2026",
-    "lastInspected": "14/02/2026",
+    "subscriptionExpires": "31/08/2026",
+    "lastInspected": "13/02/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5285",
