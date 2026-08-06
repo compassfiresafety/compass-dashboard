@@ -420,7 +420,7 @@ async function loadHistory() {
     const raw = atob(meta.content.replace(/\n/g, ''));
     const data = JSON.parse(raw);
     localStorage.setItem('compass_history', JSON.stringify(data));
-    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:green">Loaded ' + Object.keys(data).length + ' records</div>';
+    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:green">Loaded ' + Object.keys(data).length + ' records. Looking for ID: ' + _currentPropId + ' — Found: ' + (data[_currentPropId] ? data[_currentPropId].length + ' entries' : 'NOT FOUND') + '</div>';
     return { data, sha: meta.sha };
   } catch(e) {
     if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:red">Error: ' + e.message + '</div>';
