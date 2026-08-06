@@ -402,28 +402,18 @@ const HISTORY_API = 'https://api.github.com/repos/compassfiresafety/compass-dash
 let _currentPropId = null;
 
 async function loadHistory() {
-  const debugEl = document.getElementById('m-h-list');
   try {
-    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:#64748b">Fetching from GitHub...</div>';
-    const tok = atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join('');
-    const res = await fetch(HISTORY_API + '?t=' + Date.now(), {
-      headers: { 'Authorization': 'token ' + tok, 'Accept': 'application/vnd.github.v3+json' }
-    });
-    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:#64748b">Response: ' + res.status + '</div>';
+    // Use raw URL - no auth needed, no base64 decoding, works on all browsers
+    const res = await fetch('https://raw.githubusercontent.com/compassfiresafety/compass-dashboard/main/history.json?t=' + Date.now());
     if (res.status === 404) return { data: {}, sha: null };
-    if (!res.ok) {
-      if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:red">HTTP Error: ' + res.status + '</div>';
-      throw new Error('HTTP ' + res.status);
-    }
-    const meta = await res.json();
-    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:#64748b">Decoding content...</div>';
-    const raw = atob(meta.content.replace(/\n/g, ''));
-    const data = JSON.parse(raw);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
     localStorage.setItem('compass_history', JSON.stringify(data));
-    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:green">Loaded ' + Object.keys(data).length + ' records. Looking for ID: ' + _currentPropId + ' — Found: ' + (data[_currentPropId] ? data[_currentPropId].length + ' entries' : 'NOT FOUND') + '</div>';
-    return { data, sha: meta.sha };
+    // Get SHA separately for saves (needed to update file)
+    const sha = localStorage.getItem('compass_history_sha');
+    return { data, sha };
   } catch(e) {
-    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:red">Error: ' + e.message + '</div>';
+    console.warn('loadHistory failed:', e);
     const cached = localStorage.getItem('compass_history');
     return { data: cached ? JSON.parse(cached) : {}, sha: null };
   }
