@@ -13040,13 +13040,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "28/07/2026",
-    "lastInspected": "01/09/2025",
+    "subscriptionExpires": "27/07/2027",
+    "lastInspected": "31/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5110",
