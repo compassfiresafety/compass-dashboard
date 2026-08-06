@@ -3291,18 +3291,1131 @@ let _historySHA = null;
 let _historyTimer = null;
 
 async function loadHistory() {
+  if (_history) return _history;
   try {
-    const res = await fetch('https://raw.githubusercontent.com/compassfiresafety/compass-dashboard/main/history.json?t=' + Date.now());
-    if (res.status === 404) return { data: {}, sha: null };
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    localStorage.setItem('compass_history', JSON.stringify(data));
-    const sha = localStorage.getItem('compass_history_sha');
-    return { data, sha };
+    const res = await fetch(HISTORY_API, {
+      headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (res.status === 404) { _history = {}; return _history; }
+    const meta = await res.json();
+    _historySHA = meta.sha;
+    _history = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g, '')))));
+    return _history;
   } catch(e) {
+    // Try localStorage cache
     const cached = localStorage.getItem('compass_history');
-    return { data: cached ? JSON.parse(cached) : {}, sha: null };
+    _history = cached ? JSON.parse(cached) : {};
+    return _history;
   }
 }
 
->
+function saveHistoryAsync(data, sha) {
+  localStorage.setItem('compass_history', JSON.stringify(data));
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+  const body = { message: 'Update property history', content, branch: 'main' };
+  if (sha) body.sha = sha;
+  fetch(HISTORY_API, {
+    method: 'PUT',
+    headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  }).then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(result => {
+      localStorage.setItem('compass_history_sha', result.content.sha);
+      showToast('\u2705 History saved', 'success');
+    })
+    .catch(e => showToast('History saved locally only', 'warn'));
+}
+
+function switchEditTab(tab) {
+  document.getElementById('em-panel-details').style.display = tab === 'details' ? '' : 'none';
+  document.getElementById('em-panel-history').style.display = tab === 'history' ? '' : 'none';
+  const detBtn = document.getElementById('em-tab-details');
+  const hisBtn = document.getElementById('em-tab-history');
+  detBtn.style.color = tab === 'details' ? 'var(--accent)' : 'var(--text2)';
+  detBtn.style.borderBottomColor = tab === 'details' ? 'var(--accent)' : 'transparent';
+  hisBtn.style.color = tab === 'history' ? 'var(--accent)' : 'var(--text2)';
+  hisBtn.style.borderBottomColor = tab === 'history' ? 'var(--accent)' : 'transparent';
+  if (tab === 'history') renderHistoryList();
+}
+
+async function renderHistoryList() {
+  const propId = document.getElementById('em-propid-hidden').value;
+  const list = document.getElementById('h-list');
+  list.innerHTML = '<div style="color:var(--text3);font-size:12px;padding:8px">Loading…</div>';
+  const history = await loadHistory();
+  const entries = (history[propId] || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+  if (entries.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text3);font-size:12px">No history entries yet — add the first one above</div>';
+    return;
+  }
+  const typeColors = {
+    'Inspection': 'var(--green)', 'Subscription Invoice': 'var(--blue)',
+    'Faulty Alarm': 'var(--red)', 'Alarm Repair': 'var(--yellow)',
+    'Alarm Replacement': 'var(--yellow)', 'Battery Replacement': 'var(--yellow)',
+    'No Access': 'var(--red)', 'Quote Issued': 'var(--purple)',
+    'Phone Call - Tenant': 'var(--text2)', 'Phone Call - Agent': 'var(--text2)',
+    'Tenant Contact': 'var(--text2)', 'Agent Contact': 'var(--text2)', 'Other': 'var(--text2)'
+  };
+  list.innerHTML = entries.map((e, i) => {
+    const realIdx = (history[propId] || []).findIndex(x => x.id === e.id);
+    const color = typeColors[e.type] || 'var(--text2)';
+    const [y,m,d] = e.date.split('-');
+    const dateStr = `${d}/${m}/${y}`;
+    return `<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 4px;border-bottom:1px solid var(--border)">
+      <div style="flex-shrink:0;width:3px;align-self:stretch;background:${color};border-radius:2px"></div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span style="font-size:11px;font-weight:700;color:var(--text);font-family:'IBM Plex Mono',monospace">${dateStr}</span>
+          <span style="font-size:11px;font-weight:600;color:${color}">${e.type}</span>
+        </div>
+        ${e.notes ? `<div style="font-size:11px;color:var(--text2);margin-top:2px">${e.notes}</div>` : ''}
+      </div>
+      <button onclick="deleteHistoryEntry('${propId}','${e.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:0 4px;flex-shrink:0" title="Delete entry">✕</button>
+    </div>`;
+  }).join('');
+}
+
+async function addHistoryEntry() {
+  const propId = document.getElementById('em-propid-hidden').value;
+  if (!propId) { showToast('Save the property first', 'error'); return; }
+  const date = document.getElementById('h-date').value;
+  const type = document.getElementById('h-type').value;
+  const notes = document.getElementById('h-notes').value.trim();
+  if (!date) { showToast('Please select a date', 'error'); return; }
+  const history = await loadHistory();
+  if (!history[propId]) history[propId] = [];
+  history[propId].push({ id: Date.now().toString(), date, type, notes, added: new Date().toISOString() });
+  document.getElementById('h-notes').value = '';
+  await saveHistory();
+  renderHistoryList();
+  const count = (history[propId] || []).length;
+  document.getElementById('em-tab-history').textContent = `📋 History (${count})`;
+  showToast('Entry added', 'success');
+}
+
+async function deleteHistoryEntry(propId, entryId) {
+  if (!confirm('Delete this history entry?')) return;
+  const history = await loadHistory();
+  if (history[propId]) {
+    history[propId] = history[propId].filter(e => e.id !== entryId);
+    const sha = localStorage.getItem('compass_history_sha');
+    saveHistoryAsync(history, sha);
+    renderHistoryList();
+    const count = (history[propId] || []).length;
+    document.getElementById('em-tab-history').textContent = count > 0 ? `📋 History (${count})` : '📋 History';
+  }
+}
+
+function openEditModal(idx) {
+  const props = getProps();
+  const p = props[idx];
+  if (!p) return;
+
+  // populate agent datalist
+  const agents = getAgents();
+  document.getElementById('em-client-list').innerHTML = agents.map(a=>`<option value="${a}">`).join('');
+
+  document.getElementById('em-idx').value = idx;
+  document.getElementById('em-address').value = p.address||'';
+  document.getElementById('em-propid').value = p.propId||p.id||'—';
+  document.getElementById('em-propid-hidden').value = p.propId||p.id||'';
+  document.getElementById('em-client').value = p.client||'';
+  document.getElementById('em-key').value = p.key||'';
+  document.getElementById('em-cost').value = p.cost||'';
+  document.getElementById('em-active').value = p.active||'YES';
+  document.getElementById('em-compliant').value = p.compliant||'YES';
+  document.getElementById('em-expires').value = dateToInput(p.subscriptionExpires);
+  document.getElementById('em-inspected').value = dateToInput(p.lastInspected);
+  document.getElementById('em-scheduled').value = dateToInput(p.scheduled);
+  document.getElementById('em-alarm-qty').value = p.alarmCount||0;
+  document.getElementById('em-alarm-total').value = (p.alarmNotes||'').replace(/\|/g,'\n');
+  document.getElementById('em-notes').value = p.notes||'';
+
+  // Set today's date in history date picker
+  document.getElementById('h-date').value = new Date().toISOString().split('T')[0];
+
+  // Show history count on tab
+  loadHistory().then(history => {
+    const count = (history[p.propId||p.id] || []).length;
+    const hisBtn = document.getElementById('em-tab-history');
+    hisBtn.textContent = count > 0 ? `📋 History (${count})` : '📋 History';
+  });
+
+  // Always start on Details tab
+  switchEditTab('details');
+
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function openEditByPropId(propId) {
+  const props = getProps();
+  const idx = props.findIndex(p => (p.propId||p.id) === String(propId));
+  if (idx >= 0) openEditModal(idx);
+  else showToast('Property not found', 'error');
+}
+
+function saveEditProperty() {
+  const idx = parseInt(document.getElementById('em-idx').value);
+  const props = getProps();
+  if (idx < 0 || idx >= props.length) return;
+  const p = props[idx];
+  p.address = document.getElementById('em-address').value.trim();
+  p.client = document.getElementById('em-client').value.trim();
+  p.key = document.getElementById('em-key').value.trim();
+  p.cost = document.getElementById('em-cost').value.trim();
+  p.active = document.getElementById('em-active').value;
+  p.compliant = document.getElementById('em-compliant').value;
+  p.subscriptionExpires = formatDateForStore(document.getElementById('em-expires').value);
+  p.lastInspected = formatDateForStore(document.getElementById('em-inspected').value);
+  p.scheduled = formatDateForStore(document.getElementById('em-scheduled').value);
+  p.alarmCount = parseInt(document.getElementById('em-alarm-qty').value)||0;
+  p.alarmNotes = document.getElementById('em-alarm-total').value.replace(/\n/g,'|');
+  p.notes = document.getElementById('em-notes').value.trim();
+  setProps(props);
+  closeModal('edit-modal');
+  populateAllDropdowns();
+  updateBadges();
+  showToast('Property updated!', 'success');
+  // If we were editing from the duplicates page, refresh it
+  if (window._dupeKey !== undefined) {
+    renderDuplicates();
+    const remaining = getProps().filter(p2 => normalizeAddress(p2.address) === window._dupeKey);
+    if (remaining.length > 1) showDupesDetail(window._dupeKey);
+    else closeDupesDetail();
+    window._dupeKey = undefined;
+  } else {
+    renderProperties();
+  }
+  // Always re-render the action queue so overdue/expiring lists are immediately up-to-date
+  renderActionQueue();
+  // If the action queue detail panel is open, re-open the same category to refresh it
+  if (window.currentAQFilter) {
+    const updatedAction = (window._aqActions || []).find(a => a.key === window.currentAQFilter);
+    if (updatedAction) {
+      renderAQDetailTable(updatedAction.data);
+    } else {
+      // Category no longer exists (e.g. all items fixed), clear the detail panel
+      document.getElementById('aq-detail-wrap').innerHTML = '<div class="empty-state"><p style="color:var(--text3)">No items remaining in this category</p></div>';
+    }
+  }
+}
+
+function deleteProperty() {
+  const idx = parseInt(document.getElementById('em-idx').value);
+  if (!confirm('Delete this property? This cannot be undone.')) return;
+  const props = getProps();
+  props.splice(idx, 1);
+  setProps(props);
+  closeModal('edit-modal');
+  populateAllDropdowns();
+  updateBadges();
+  renderProperties();
+  renderActionQueue();
+  if (window.currentAQFilter) {
+    const updatedAction = (window._aqActions || []).find(a => a.key === window.currentAQFilter);
+    if (updatedAction) renderAQDetailTable(updatedAction.data);
+    else document.getElementById('aq-detail-wrap').innerHTML = '<div class="empty-state"><p style="color:var(--text3)">No items remaining in this category</p></div>';
+  }
+  showToast('Property deleted', 'success');
+}
+
+// ===== CSV IMPORT =====
+let parsedCSV = [];
+let csvHeadersGlobal = [];
+
+document.addEventListener('change', e => {
+  if (e.target.id === 'import-mode') {
+    document.getElementById('import-agent-group').style.display = e.target.value === 'replace-agent' ? '' : 'none';
+  }
+});
+
+function previewCSV() {
+  const file = document.getElementById('csv-file-input').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const text = e.target.result;
+    const rows = parseCSVText(text);
+    if (rows.length < 2) { showToast('CSV appears empty', 'error'); return; }
+    csvHeadersGlobal = rows[0];
+    parsedCSV = rows.slice(1).filter(r => r.some(c => c.trim()));
+
+    // Auto-map
+    const FIELD_MAP = [
+      { field: 'propId', label: 'Property ID (CFS-XXXX)', aliases: ['property id','prop id','propid','cfs','id'] },
+      { field: 'client', label: 'Agent / Client', aliases: ['client','agent','property manager','pm'] },
+      { field: 'address', label: 'Property Address', aliases: ['address','property address','property'] },
+      { field: 'key', label: 'Key #', aliases: ['key','key #','key number','key no'] },
+      { field: 'active', label: 'Active', aliases: ['active'] },
+      { field: 'cost', label: 'Cost', aliases: ['cost','price','fee'] },
+      { field: 'subscriptionExpires', label: 'Subscription Expires', aliases: ['subscription expires','expires','expiry','expiry date'] },
+      { field: 'lastInspected', label: 'Last Inspected', aliases: ['last inspected','last inspection','inspected'] },
+      { field: 'scheduled', label: 'Scheduled', aliases: ['scheduled','schedule date','next inspection'] },
+      { field: 'compliant', label: 'Compliant', aliases: ['compliant','compliance'] },
+      { field: 'alarmNotes', label: 'Alarm Detail', aliases: ['alarm total','alarm detail','alarms','alarm notes'] },
+    ];
+
+    const normalH = csvHeadersGlobal.map(h => h.toLowerCase().trim());
+    const mappingRows = document.getElementById('mapping-rows');
+    mappingRows.innerHTML = FIELD_MAP.map(f => {
+      const guessIdx = normalH.findIndex(h => f.aliases.some(a => h.includes(a)));
+      const opts = ['<option value="">— skip —</option>',
+        ...csvHeadersGlobal.map((h,i) => `<option value="${i}" ${i===guessIdx?'selected':''}>${h}</option>`)
+      ].join('');
+      return `<tr><td class="field-name" style="padding:6px 8px">${f.label}</td>
+        <td style="padding:4px 8px"><select class="filter-select" data-field="${f.field}" style="width:100%">${opts}</select></td></tr>`;
+    }).join('');
+
+    // Preview table
+    const thead = document.getElementById('csv-preview-head');
+    const tbody = document.getElementById('csv-preview-body');
+    thead.innerHTML = '<tr>' + csvHeadersGlobal.map(h=>`<th style="padding:6px 8px;font-size:11px">${h}</th>`).join('') + '</tr>';
+    tbody.innerHTML = parsedCSV.slice(0,5).map(row =>
+      '<tr>' + row.map(c=>`<td style="padding:5px 8px;font-size:11px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c}</td>`).join('') + '</tr>'
+    ).join('');
+
+    document.getElementById('csv-preview-section').style.display = '';
+  };
+  reader.readAsText(file);
+}
+
+function parseCSVText(text) {
+  const rows = [];
+  const lines = text.split(/\r?\n/);
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    const row = [];
+    let inQuote = false, cur = '';
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { inQuote = !inQuote; }
+      else if (c === ',' && !inQuote) { row.push(cur.trim()); cur = ''; }
+      else { cur += c; }
+    }
+    row.push(cur.trim());
+    rows.push(row);
+  }
+  return rows;
+}
+
+function doImport() {
+  const selects = document.querySelectorAll('#mapping-rows select[data-field]');
+  const mapping = {};
+  selects.forEach(s => { if (s.value !== '') mapping[s.dataset.field] = parseInt(s.value); });
+
+  if (!mapping.address && mapping.address !== 0) { showToast('Must map at least the Address field', 'error'); return; }
+
+  const mode = document.getElementById('import-mode').value;
+  const replaceAgent = document.getElementById('import-replace-agent').value;
+
+  function countAlarms(text) {
+    if (!text || text.trim() === '') return 0;
+    const lines = text.split(/[|\n]/).filter(l => l.trim());
+    return lines.length;
+  }
+
+  function extractBrand(text) {
+    if (!text) return '';
+    const brands = [];
+    if (/clipsal/i.test(text)) brands.push('Clipsal');
+    if (/240v/i.test(text)) brands.push('240V Hardwired');
+    if (/lithium.*wireless|wireless.*lithium/i.test(text)) brands.push('Wireless Lithium');
+    if (/wifi|wi-fi/i.test(text)) brands.push('WiFi');
+    if (!brands.length && text.trim()) brands.push('Other');
+    return brands.join(', ');
+  }
+
+  const newRecords = parsedCSV.map((row, i) => {
+    const g = (f) => mapping[f] !== undefined ? (row[mapping[f]]||'').trim() : '';
+    const alarmNotes = g('alarmNotes');
+    return {
+      id: 'prop_import_' + Date.now() + '_' + i,
+      propId: g('propId'),
+      client: g('client'), address: g('address').replace(/\n/g,', '),
+      key: g('key'), active: g('active')||'YES', cost: g('cost'),
+      subscriptionExpires: g('subscriptionExpires'), lastInspected: g('lastInspected'),
+      scheduled: g('scheduled'), compliant: g('compliant'),
+      alarmCount: countAlarms(alarmNotes),
+      alarmBrand: extractBrand(alarmNotes),
+      alarmNotes: alarmNotes,
+    };
+  }).filter(r => r.address);
+
+  let props = getProps();
+
+  if (mode === 'replace-all') {
+    props = newRecords;
+  } else if (mode === 'replace-agent' && replaceAgent) {
+    props = props.filter(p => p.client !== replaceAgent);
+    props = props.concat(newRecords);
+  } else {
+    // merge: match by propId first, then fall back to address
+    const idMap = {};
+    const addrMap = {};
+    props.forEach((p,i) => {
+      if (p.propId) idMap[p.propId] = i;
+      addrMap[normalizeAddress(p.address)] = i;
+    });
+    newRecords.forEach(r => {
+      const matchIdx = (r.propId && idMap[r.propId] !== undefined)
+        ? idMap[r.propId]
+        : addrMap[normalizeAddress(r.address)];
+      if (matchIdx !== undefined) {
+        const old = props[matchIdx];
+        const merged = { ...old };
+        // Only overwrite fields that are non-empty in the import
+        Object.entries(r).forEach(([k,v]) => { if (v !== '' && v !== null && v !== undefined && k !== 'id') merged[k] = v; });
+        merged.id = old.id;
+        merged.propId = old.propId || r.propId;
+        props[matchIdx] = merged;
+      } else {
+        if (!r.propId) r.propId = 'CFS-' + String(props.length + 1).padStart(4,'0');
+        props.push(r);
+      }
+    });
+  }
+
+  setProps(props);
+  populateAllDropdowns();
+  updateBadges();
+  renderDashboard();
+  document.getElementById('csv-preview-section').style.display = 'none';
+  document.getElementById('csv-file-input').value = '';
+  showToast(`Imported ${newRecords.length} properties (${mode} mode)`, 'success');
+}
+
+function cancelImport() {
+  document.getElementById('csv-preview-section').style.display = 'none';
+  document.getElementById('csv-file-input').value = '';
+  parsedCSV = [];
+}
+
+// ===== CONTACTS =====
+function renderContacts() {
+  const contacts = getContacts();
+  const tbody = document.getElementById('contacts-table');
+  tbody.innerHTML = contacts.map((c,i) => `<tr>
+    <td>${c.name}</td><td>${c.agency||'—'}</td>
+    <td><a href="mailto:${c.email}" style="color:var(--blue)">${c.email}</a></td>
+    <td>${c.phone||'—'}</td>
+    <td>
+      <button class="btn btn-secondary btn-sm" onclick="openEditContactModal(${i})">Edit</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteContact(${i})">Delete</button>
+    </td>
+  </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px">No contacts yet. Add or import contacts.</td></tr>';
+}
+
+function showAddContactModal() {
+  document.getElementById('cm-idx').value = -1;
+  document.getElementById('contact-modal-title').textContent = 'Add Contact';
+  ['cm-name','cm-agency','cm-email','cm-phone'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('contact-modal').classList.add('open');
+}
+
+function openEditContactModal(idx) {
+  const c = getContacts()[idx];
+  if (!c) return;
+  document.getElementById('cm-idx').value = idx;
+  document.getElementById('contact-modal-title').textContent = 'Edit Contact';
+  document.getElementById('cm-name').value = c.name||'';
+  document.getElementById('cm-agency').value = c.agency||'';
+  document.getElementById('cm-email').value = c.email||'';
+  document.getElementById('cm-phone').value = c.phone||'';
+  document.getElementById('contact-modal').classList.add('open');
+}
+
+function saveContact() {
+  const idx = parseInt(document.getElementById('cm-idx').value);
+  const name = document.getElementById('cm-name').value.trim();
+  const email = document.getElementById('cm-email').value.trim();
+  if (!name || !email) { showToast('Name and email required', 'error'); return; }
+  const c = { name, agency: document.getElementById('cm-agency').value.trim(), email, phone: document.getElementById('cm-phone').value.trim() };
+  const contacts = getContacts();
+  if (idx >= 0) contacts[idx] = c;
+  else contacts.push(c);
+  setContacts(contacts);
+  closeModal('contact-modal');
+  renderContacts();
+  showToast('Contact saved!', 'success');
+}
+
+function deleteContact(idx) {
+  if (!confirm('Delete this contact?')) return;
+  const contacts = getContacts();
+  contacts.splice(idx, 1);
+  setContacts(contacts);
+  renderContacts();
+  showToast('Contact deleted', 'success');
+}
+
+function importContactsCSV() {
+  const file = document.getElementById('contacts-csv-input').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const rows = parseCSVText(e.target.result);
+    if (rows.length < 2) return;
+    const headers = rows[0].map(h => h.toLowerCase().trim());
+    const nameIdx = headers.findIndex(h => h.includes('name'));
+    const emailIdx = headers.findIndex(h => h.includes('email'));
+    const agencyIdx = headers.findIndex(h => h.includes('agency') || h.includes('company') || h.includes('client'));
+    const phoneIdx = headers.findIndex(h => h.includes('phone') || h.includes('mobile'));
+    const contacts = getContacts();
+    rows.slice(1).forEach(row => {
+      if (emailIdx >= 0 && row[emailIdx]) {
+        contacts.push({
+          name: nameIdx >= 0 ? row[nameIdx] : '',
+          email: row[emailIdx],
+          agency: agencyIdx >= 0 ? row[agencyIdx] : '',
+          phone: phoneIdx >= 0 ? row[phoneIdx] : '',
+        });
+      }
+    });
+    setContacts(contacts);
+    renderContacts();
+    showToast(`Imported ${rows.length-1} contacts`, 'success');
+  };
+  reader.readAsText(file);
+}
+
+// ===== PURGE =====
+function renderPurge() {
+  populateAllDropdowns();
+}
+
+function purgeByAgent() {
+  const agent = document.getElementById('purge-agent-select').value;
+  if (!agent) { showToast('Select an agent first', 'error'); return; }
+  if (!confirm(`Delete ALL properties for "${agent}"? This cannot be undone.`)) return;
+  let props = getProps();
+  const before = props.length;
+  props = props.filter(p => p.client !== agent);
+  setProps(props);
+  populateAllDropdowns();
+  updateBadges();
+  showToast(`Removed ${before - props.length} properties for ${agent}`, 'success');
+}
+
+function purgeAll() {
+  const val = document.getElementById('purge-confirm-input').value;
+  if (val !== 'PURGE ALL') { showToast('Type "PURGE ALL" to confirm', 'error'); return; }
+  setProps([]);
+  populateAllDropdowns();
+  updateBadges();
+  renderDashboard();
+  document.getElementById('purge-confirm-input').value = '';
+  showToast('All property data purged', 'success');
+}
+
+// ===== EXPORT =====
+
+// ===== PER-REPORT EXPORT FUNCTIONS =====
+function exportFilteredCSV(props, filename) {
+  const headers = ['Property ID','Client','Property Address','Key #','Active','Cost','Subscription Expires','Last Inspected','Scheduled','Compliant','Alarm Qty','Alarm Brand'];
+  const rows = props.map(p => [
+    p.propId||p.id, p.client, p.address, p.key, p.active, p.cost,
+    p.subscriptionExpires, p.lastInspected, p.scheduled, p.compliant,
+    p.alarmCount, p.alarmBrand
+  ].map(v => `"${(v||'').toString().replace(/"/g,'""')}"`));
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  showToast('Exported!', 'success');
+}
+function exportExpiring() {
+  const props = getProps(), today = new Date(); today.setHours(0,0,0,0);
+  const daysVal = document.getElementById('exp-days')?.value||'60';
+  const agent = document.getElementById('exp-agent')?.value||'';
+  let f = daysVal==='overdue'
+    ? props.filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&d<today;})
+    : props.filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&(d-today)/86400000<=parseInt(daysVal)&&(d-today)/86400000>=0;});
+  if(agent) f=f.filter(p=>p.client===agent);
+  exportFilteredCSV(f, `compass_expiring_${new Date().toISOString().slice(0,10)}.csv`);
+}
+function exportInspections() {
+  const props = getProps();
+  const agent = document.getElementById('insp-agent')?.value||'';
+  const sortVal = document.getElementById('insp-sort')?.value||'recent';
+  let f = agent ? props.filter(p=>p.client===agent) : [...props];
+  if(sortVal==='never') f=f.filter(p=>!parseDate(p.lastInspected));
+  else { f=f.filter(p=>parseDate(p.lastInspected)); if(sortVal==='recent') f.sort((a,b)=>parseDate(b.lastInspected)-parseDate(a.lastInspected)); else f.sort((a,b)=>parseDate(a.lastInspected)-parseDate(b.lastInspected)); }
+  exportFilteredCSV(f, `compass_inspections_${new Date().toISOString().slice(0,10)}.csv`);
+}
+function exportRenewals() {
+  const props = getProps();
+  const from=document.getElementById('renew-from')?.value, to=document.getElementById('renew-to')?.value;
+  const agent=document.getElementById('renew-agent')?.value||'';
+  let f=[...props];
+  if(agent) f=f.filter(p=>p.client===agent);
+  if(from) f=f.filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&d>=new Date(from);});
+  if(to) f=f.filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&d<=new Date(to+'T23:59:59');});
+  exportFilteredCSV(f, `compass_renewals_${new Date().toISOString().slice(0,10)}.csv`);
+}
+function exportKeys() {
+  const props=getProps();
+  const search=(document.getElementById('key-search')?.value||'').toLowerCase();
+  const agent=document.getElementById('key-agent')?.value||'';
+  const filter=document.getElementById('key-filter')?.value||'';
+  let f=[...props];
+  if(agent) f=f.filter(p=>p.client===agent);
+  if(filter==='haskey') f=f.filter(p=>p.key&&p.key!=='');
+  if(filter==='nokey') f=f.filter(p=>!p.key||p.key==='');
+  if(search) f=f.filter(p=>(p.address||'').toLowerCase().includes(search)||(p.key||'').toLowerCase().includes(search));
+  exportFilteredCSV(f, `compass_keys_${new Date().toISOString().slice(0,10)}.csv`);
+}
+function exportAlarms() {
+  const props=getProps();
+  const agent=document.getElementById('alarm-agent')?.value||'';
+  const brand=document.getElementById('alarm-brand-filter')?.value||'';
+  let f=[...props];
+  if(agent) f=f.filter(p=>p.client===agent);
+  if(brand) f=f.filter(p=>(p.alarmBrand||'').includes(brand));
+  exportFilteredCSV(f.sort((a,b)=>(parseInt(b.alarmCount)||0)-(parseInt(a.alarmCount)||0)), `compass_alarms_${new Date().toISOString().slice(0,10)}.csv`);
+}
+function exportAgentReport() {
+  const props=getProps(), today=new Date(); today.setHours(0,0,0,0);
+  const filter=document.getElementById('agent-filter')?.value||'';
+  const groups={};
+  props.forEach(p=>{const a=p.client||'Unknown';if(!groups[a])groups[a]=[];groups[a].push(p);});
+  let rows=Object.entries(groups).sort((a,b)=>b[1].length-a[1].length);
+  if(filter) rows=rows.filter(([a])=>a===filter);
+  const headers=['Agent','Total','Active','Inactive','Compliant','Non-Compliant','Expiring 60d','% Portfolio','% Revenue','Total Revenue','Active Revenue'];
+  const csvRows=rows.map(([agent,ps])=>{
+    const active=ps.filter(p=>p.active==='YES').length;
+    const compliant=ps.filter(p=>p.compliant==='YES').length;
+    const exp60=ps.filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&(d-today)/86400000<=60&&(d-today)/86400000>=0;}).length;
+    const totalPC=props.length; const totalPR=props.reduce((s2,p2)=>s2+parseCost(p2.cost),0); const pctP=(totalPC>0?(ps.length/totalPC*100).toFixed(1):'0'); const pctR=(totalPR>0?(ps.reduce((s,p)=>s+parseCost(p.cost),0)/totalPR*100).toFixed(1):'0');
+    const rev=ps.reduce((s,p)=>s+parseCost(p.cost),0);
+    const arev=ps.filter(p=>p.active==='YES').reduce((s,p)=>s+parseCost(p.cost),0);
+    return [agent,ps.length,active,ps.length-active,compliant,ps.length-compliant,exp60,avgA,rev,arev];
+  });
+  const csv=[headers.join(','),...csvRows.map(r=>r.map(v=>`"${v}"`).join(','))].join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`compass_agents_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+  showToast('Agent report exported!','success');
+}
+function exportDuplicates() {
+  const props=getProps(), am={};
+  props.forEach(p=>{const k=normalizeAddress(p.address);if(!am[k])am[k]={original:p.address,entries:[]};am[k].entries.push(p);});
+  const dupes=Object.entries(am).filter(([,v])=>v.entries.length>1);
+  const headers=['Address','Occurrences','Agents','Property IDs'];
+  const rows=dupes.map(([,v])=>[v.original,v.entries.length,[...new Set(v.entries.map(e=>e.client))].join(' | '),v.entries.map(e=>e.propId||e.id).join(' | ')]);
+  const csv=[headers.join(','),...rows.map(r=>r.map(v=>`"${v}"`).join(','))].join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`compass_duplicates_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+  showToast('Duplicates exported!','success');
+}
+
+function exportAllCSV() {
+  const props = getProps();
+  const headers = ['Property ID','Client','Property Address','Key #','Active','Cost','Subscription Expires','Last Inspected','Scheduled','Compliant','Alarm Qty','Alarm Brand','Alarm Notes'];
+  const rows = props.map(p => [
+    p.propId||p.id, p.client, p.address, p.key, p.active, p.cost,
+    p.subscriptionExpires, p.lastInspected, p.scheduled, p.compliant,
+    p.alarmCount, p.alarmBrand, (p.alarmNotes||'').replace(/\|/g,' | ')
+  ].map(v => `"${(v||'').toString().replace(/"/g,'""')}"`));
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `compass_export_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast('Export downloaded!', 'success');
+}
+
+// ===== MODAL =====
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('open');
+});
+
+// ===== TOAST =====
+function showToast(msg, type='success') {
+  const container = document.getElementById('toasts');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  container.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+
+// ===== ACTION QUEUE =====
+let currentAQFilter = null;
+let aqPage = 1;
+let mdPage = 1;
+let currentMissingTab = 'keys';
+let currentAgentDetail = null;
+
+function renderActionQueue() {
+  const allProps = getProps();
+  // Inactive properties are excluded from action queue
+  const props = allProps.filter(p => p.active !== 'NO');
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  const overdue = props.filter(p => { const d=parseDate(p.subscriptionExpires); return d && d < today; });
+  const expiring30 = props.filter(p => { const d=parseDate(p.subscriptionExpires); return d && (d-today)/86400000 <= 30 && (d-today)/86400000 >= 0; });
+  const noInspection12m = props.filter(p => { const d=parseDate(p.lastInspected); return !d || (today-d)/86400000 > 365; });
+  const neverInspected = props.filter(p => !parseDate(p.lastInspected));
+  const nonCompliant = props.filter(p => p.compliant === 'NO');
+  const noKey = props.filter(p => keyIsMissing(p.key));
+  const inactive = props.filter(p => p.active !== 'YES');
+
+  const total = overdue.length + expiring30.length + noInspection12m.length + nonCompliant.length;
+
+  document.getElementById('aq-stats').innerHTML = `
+    <div class="stat-card red"><div class="stat-label">Urgent Actions</div><div class="stat-value red">${overdue.length + nonCompliant.length}</div><div class="stat-sub">Overdue + non-compliant</div></div>
+    <div class="stat-card yellow"><div class="stat-label">Due Soon</div><div class="stat-value yellow">${expiring30.length}</div><div class="stat-sub">Expiring within 30 days</div></div>
+    <div class="stat-card blue"><div class="stat-label">Inspection Gap</div><div class="stat-value blue">${noInspection12m.length}</div><div class="stat-sub">Not inspected 12m+</div></div>
+
+  `;
+
+  const actions = [
+    { type:'urgent', tag:'urgent', label:`${overdue.length} subscriptions are overdue`, count: overdue.length, key:'overdue', data: overdue },
+    { type:'urgent', tag:'urgent', label:`${nonCompliant.length} properties non-compliant`, count: nonCompliant.length, key:'noncompliant', data: nonCompliant },
+    { type:'warn', tag:'warn', label:`${expiring30.length} subscriptions expire within 30 days`, count: expiring30.length, key:'expiring30', data: expiring30 },
+    { type:'warn', tag:'warn', label:`${neverInspected.length} properties have never been inspected`, count: neverInspected.length, key:'neverinspected', data: neverInspected },
+    { type:'info', tag:'info', label:`${noInspection12m.length - neverInspected.length} properties not inspected in 12+ months`, count: noInspection12m.length - neverInspected.length, key:'stale12m', data: noInspection12m.filter(p => parseDate(p.lastInspected)) },
+
+    { type:'info', tag:'info', label:`${inactive.length} inactive properties`, count: inactive.length, key:'inactive', data: inactive },
+  ].filter(a => a.count > 0);
+
+  document.getElementById('aq-list').innerHTML = actions.map(a => `
+    <div class="action-item ${a.type}" onclick="showAQDetail('${a.key}')" style="padding:6px 10px;gap:6px">
+      <span class="action-tag ${a.tag}" style="font-size:9px;padding:2px 5px">${a.tag.toUpperCase()}</span>
+      <span class="action-desc" style="font-size:11px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.label}</span>
+      <span class="action-count text-${a.type==='urgent'?'danger':a.type==='warn'?'warn':'blue'}" style="font-size:11px;font-weight:700;min-width:28px;text-align:right">${a.count}</span>
+      <button class="btn btn-secondary btn-sm" style="font-size:9px;padding:2px 6px;flex-shrink:0" onclick="event.stopPropagation();exportAQCategory('${a.key}')">CSV</button>
+      <span style="color:var(--text3);font-size:10px">▶</span>
+    </div>`).join('') || '<div class="alert success">✅ No actions required — portfolio looks healthy!</div>';
+
+  window._aqActions = actions;
+}
+
+function showAQDetail(key) {
+  const action = (window._aqActions||[]).find(a => a.key === key);
+  if (!action) return;
+  currentAQFilter = key;
+  aqPage = 1;
+  renderAQDetailTable(action.data);
+}
+
+function renderAQDetailTable(data, agentFilter) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const wrap = document.getElementById('aq-detail-wrap');
+  if (!data || data.length === 0) {
+    wrap.innerHTML = agentFilter
+      ? `<div class="empty-state"><p>No overdue properties for <strong>${agentFilter}</strong></p><button class="btn btn-secondary btn-sm" style="margin-top:8px" onclick="showAQDetail('overdue')">Clear filter</button></div>`
+      : '<div class="empty-state"><p>No items</p></div>';
+    return;
+  }
+  const filterBanner = agentFilter
+    ? `<div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 10px;margin-bottom:8px;font-size:11px">
+        <span>Filtered to <strong>${agentFilter}</strong> (${data.length} overdue)</span>
+        <button class="btn btn-secondary btn-sm" onclick="showAQDetail('overdue')">Clear filter</button>
+      </div>`
+    : '';
+  const start = (aqPage-1)*PAGE_SIZE, slice = data.slice(start, start+PAGE_SIZE);
+  wrap.innerHTML = `${filterBanner}<table>
+    <thead><tr><th>Address</th><th>Agent</th><th>Key #</th><th>Last Inspected</th><th>Expires</th><th>Edit</th></tr></thead>
+    <tbody>${slice.map(p => `<tr>
+      <td>${p.address}</td><td><span class="badge neutral">${p.client}</span></td>
+      <td class="mono">${p.key||'—'}</td>
+      <td class="mono">${formatDate(p.lastInspected)}</td>
+      <td class="mono">${formatDate(p.subscriptionExpires)}</td>
+      <td><button class="btn btn-secondary btn-sm" onclick="openEditByPropId('${p.propId||p.id}')">Edit</button></td>
+    </tr>`).join('')}</tbody>
+  </table>
+  <div class="pagination" id="aq-detail-pagination"></div>`;
+  renderPagination('aq-detail-pagination', aqPage, data.length, PAGE_SIZE, p => { aqPage=p; renderAQDetailTable(data, agentFilter); });
+}
+
+function exportActionQueue() {
+  const props = getProps();
+  const today = new Date(); today.setHours(0,0,0,0);
+  const issues = props.map(p => {
+    const flags = [];
+    const d = parseDate(p.subscriptionExpires);
+    if (d && d < today) flags.push('Overdue');
+    else if (d && (d-today)/86400000 <= 30) flags.push('Expiring 30d');
+    if (p.compliant === 'NO') flags.push('Non-Compliant');
+    const li = parseDate(p.lastInspected);
+    if (!li) flags.push('Never Inspected');
+    else if ((today-li)/86400000 > 365) flags.push('Stale 12m+');
+    if (!p.key || p.key === '') flags.push('No Key #');
+    return flags.length ? { ...p, issues: flags.join(', ') } : null;
+  }).filter(Boolean);
+  const headers = ['Property ID','Address','Agent','Key #','Issues','Last Inspected','Expires','Compliant'];
+  const rows = issues.map(p => [p.propId||p.id,p.address,p.client,p.key||'',p.issues,p.lastInspected,p.subscriptionExpires,p.compliant]);
+  const csv = [headers.join(','),...rows.map(r=>r.map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(','))].join('\n');
+  const blob = new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`compass_action_queue_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+  showToast('Action queue exported!','success');
+}
+
+function exportAQCategory(key) {
+  const action = (window._aqActions||[]).find(a => a.key === key);
+  if (!action || !action.data || action.data.length === 0) { showToast('No data to export', 'error'); return; }
+  const headers = ['Property ID','Address','Agent','Key #','Last Inspected','Expires','Compliant','Active'];
+  const rows = action.data.map(p => [p.propId||p.id,p.address,p.client,p.key||'',p.lastInspected||'',p.subscriptionExpires||'',p.compliant,p.active]);
+  const csv = [headers.join(','),...rows.map(r=>r.map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(','))].join('\n');
+  const blob = new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`compass_${key}_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+  showToast(`Exported ${action.data.length} records`, 'success');
+}
+
+// ===== AGENT VIEW =====
+function renderAgentView() {
+  const props = getProps();
+  const today = new Date(); today.setHours(0,0,0,0);
+  const sort = document.getElementById('av-sort')?.value || 'properties';
+
+  const groups = {};
+  props.forEach(p => {
+    const a = p.client||'Unknown';
+    if (!groups[a]) groups[a] = [];
+    groups[a].push(p);
+  });
+
+  let agents = Object.entries(groups);
+  if (sort === 'revenue') agents.sort((a,b) => b[1].reduce((s,p)=>s+parseCost(p.cost),0) - a[1].reduce((s,p)=>s+parseCost(p.cost),0));
+  else if (sort === 'expiring') agents.sort((a,b) => {
+    const ae = a[1].filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&(d-today)/86400000<=60&&(d-today)/86400000>=0;}).length;
+    const be = b[1].filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&(d-today)/86400000<=60&&(d-today)/86400000>=0;}).length;
+    return be-ae;
+  });
+  else if (sort === 'name') agents.sort((a,b) => a[0].localeCompare(b[0]));
+  else agents.sort((a,b) => b[1].length - a[1].length);
+
+  document.getElementById('av-cards').innerHTML = agents.map(([agent, ps]) => {
+    const active = ps.filter(p=>p.active==='YES').length;
+    const exp60 = ps.filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&(d-today)/86400000<=60&&(d-today)/86400000>=0;}).length;
+    const overdue = ps.filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&d<today;}).length;
+    const rev = ps.reduce((s,p)=>s+parseCost(p.cost),0);
+    const noKey = ps.filter(p=>keyIsMissing(p.key)).length;
+    const alertClass = overdue > 0 ? 'style="border-color:var(--red)"' : exp60 > 0 ? 'style="border-color:var(--yellow)"' : '';
+    return `<div class="agent-card" ${alertClass} onclick="showAgentViewDetail('${agent.replace(/'/g,"\'")}')">
+      <div class="agent-card-name">${agent}${overdue>0?` <span class="badge no" style="font-size:9px">${overdue} overdue</span>`:''}${exp60>0&&overdue===0?` <span class="badge warn" style="font-size:9px">${exp60} expiring</span>`:''}</div>
+      <div class="agent-card-stats">
+        <div class="agent-card-stat">Properties <span>${ps.length}</span></div>
+        <div class="agent-card-stat">Active <span>${active}</span></div>
+        <div class="agent-card-stat">Revenue <span>${fmtMoney(rev)}</span></div>
+        <div class="agent-card-stat">No Key # <span style="color:${noKey>0?'var(--yellow)':'var(--green)'}">${noKey}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showAgentViewDetail(agent) {
+  currentAgentDetail = agent;
+  const props = getProps().filter(p => p.client === agent);
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  const active = props.filter(p=>p.active==='YES').length;
+  const compliant = props.filter(p=>p.compliant==='YES').length;
+  const exp60 = props.filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&(d-today)/86400000<=60&&(d-today)/86400000>=0;}).length;
+  const overdue = props.filter(p=>{const d=parseDate(p.subscriptionExpires);return d&&d<today;}).length;
+  const rev = props.reduce((s,p)=>s+parseCost(p.cost),0);
+  const noKey = props.filter(p=>keyIsMissing(p.key)).length;
+
+  document.getElementById('av-detail-title').textContent = agent + ' — ' + props.length + ' Properties';
+  document.getElementById('av-detail-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Properties</div><div class="stat-value accent">${props.length}</div></div>
+    <div class="stat-card green"><div class="stat-label">Active</div><div class="stat-value green">${active}</div></div>
+    <div class="stat-card purple"><div class="stat-label">Revenue</div><div class="stat-value purple">${fmtMoney(rev)}</div></div>
+    <div class="stat-card ${exp60>0?'yellow':'green'}"><div class="stat-label">Expiring 60d</div><div class="stat-value ${exp60>0?'yellow':'green'}">${exp60}</div></div>
+    <div class="stat-card ${overdue>0?'red':'green'}"><div class="stat-label">Overdue</div><div class="stat-value ${overdue>0?'red':'green'}">${overdue}</div></div>
+    <div class="stat-card ${noKey>0?'yellow':'green'}"><div class="stat-label">No Key #</div><div class="stat-value ${noKey>0?'yellow':'green'}">${noKey}</div></div>
+  `;
+
+  document.getElementById('av-detail-search').value = '';
+  document.getElementById('av-detail-status').value = '';
+  document.getElementById('av-detail-wrap').style.display = '';
+  filterAgentDetail();
+  document.getElementById('av-detail-wrap').scrollIntoView({behavior:'smooth'});
+}
+
+function filterAgentDetail() {
+  if (!currentAgentDetail) return;
+  const props = getProps().filter(p => p.client === currentAgentDetail);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const search = (document.getElementById('av-detail-search')?.value||'').toLowerCase();
+  const status = document.getElementById('av-detail-status')?.value||'';
+
+  let filtered = [...props];
+  if (search) filtered = filtered.filter(p => (p.address||'').toLowerCase().includes(search));
+  if (status === 'expiring') filtered = filtered.filter(p => {const d=parseDate(p.subscriptionExpires);return d&&(d-today)/86400000<=60&&(d-today)/86400000>=0;});
+  else if (status === 'overdue') filtered = filtered.filter(p => {const d=parseDate(p.subscriptionExpires);return d&&d<today;});
+  else if (status === 'no-key') filtered = filtered.filter(p => !p.key||p.key==='');
+  else if (status === 'non-compliant') filtered = filtered.filter(p => p.compliant==='NO');
+
+  document.getElementById('av-detail-table').innerHTML = filtered.map(p => {
+    const days = daysDiff(p.subscriptionExpires);
+    const expClass = days===null?'':days<0?'text-danger':days<=30?'text-warn':'';
+    return `<tr>
+      <td class="mono" style="font-size:11px;color:var(--accent)">${p.propId||'—'}</td>
+      <td>${p.address}</td>
+      <td class="mono editable-cell" title="Click to edit" onclick="inlineEdit(this,'${p.propId||p.id}','key','${(p.key||'').replace(/'/g,"\'")}');renderAgentView()">${p.key||'<span style="color:var(--text3)">add</span>'}</td>
+      <td class="mono editable-cell" title="Click to edit" onclick="inlineEdit(this,'${p.propId||p.id}','lastInspected','${p.lastInspected||''}');renderAgentView()">${formatDate(p.lastInspected)}</td>
+      <td class="mono ${expClass}">${formatDate(p.subscriptionExpires)}</td>
+      <td class="mono">${p.alarmCount||0}</td>
+      <td><span class="badge ${p.compliant==='YES'?'yes':'no'}">${p.compliant||'?'}</span></td>
+      <td class="notes-preview" title="${(p.notes||'').replace(/"/g,'&quot;')}">${p.notes||'—'}</td>
+      <td><button class="btn btn-secondary btn-sm" onclick="openEditByPropId('${p.propId||p.id}')">Edit</button></td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="9" style="text-align:center;color:var(--text3);padding:20px">No properties match filter</td></tr>';
+}
+
+function closeAgentDetail() {
+  document.getElementById('av-detail-wrap').style.display = 'none';
+  currentAgentDetail = null;
+}
+
+function exportAgentDetail() {
+  if (!currentAgentDetail) return;
+  const props = getProps().filter(p => p.client === currentAgentDetail);
+  exportFilteredCSV(props, `compass_${currentAgentDetail.replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.csv`);
+}
+
+function generateAgentKeyRequest() {
+  if (!currentAgentDetail) return;
+  document.getElementById('kr-agent').value = currentAgentDetail;
+  navigate('key-requests');
+  renderKeyRequests();
+}
+
+// ===== RENEWAL FORECAST CHART =====
+function renderRenewalChart() {
+  const props = getProps();
+  const today = new Date();
+  const months = [];
+  for (let i = 0; i < 12; i++) {
+    const d = new Date(today.getFullYear(), today.getMonth() + i, 1);
+    months.push({ label: d.toLocaleDateString('en-AU',{month:'short',year:'2-digit'}), year: d.getFullYear(), month: d.getMonth(), count: 0, revenue: 0 });
+  }
+  props.forEach(p => {
+    const d = parseDate(p.subscriptionExpires);
+    if (!d) return;
+    const mi = months.findIndex(m => m.year === d.getFullYear() && m.month === d.getMonth());
+    if (mi >= 0) { months[mi].count++; months[mi].revenue += parseCost(p.cost); }
+  });
+  const maxCount = Math.max(...months.map(m => m.count), 1);
+  const el = document.getElementById('renewal-chart');
+  if (!el) return;
+  el.innerHTML = `<div class="chart-bar-wrap">` +
+    months.map(m => `
+      <div class="chart-bar-col">
+        <div class="chart-bar-val">${m.count||''}</div>
+        <div class="chart-bar" style="height:${Math.max(4,(m.count/maxCount)*100)}px" title="${m.label}: ${m.count} renewals, ${fmtMoney(m.revenue)}">
+          <div class="chart-bar-tooltip">${m.label}<br>${m.count} renewals<br>${fmtMoney(m.revenue)}</div>
+        </div>
+        <div class="chart-bar-label">${m.label}</div>
+      </div>`).join('') +
+    `</div>`;
+}
+
+// ===== MISSING DATA =====
+function renderMissingData() {
+  const allProps = getProps();
+  // Inactive properties are excluded from missing data reports
+  const props = allProps.filter(p => p.active !== 'NO');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const noKey = props.filter(p => keyIsMissing(p.key));
+  const neverInspected = props.filter(p => !parseDate(p.lastInspected));
+  const stale12m = props.filter(p => { const d=parseDate(p.lastInspected); return d && (today-d)/86400000 > 365; });
+  const noExpiry = props.filter(p => !parseDate(p.subscriptionExpires));
+  const nonCompliant = props.filter(p => p.compliant === 'NO');
+
+  document.getElementById('md-cards').innerHTML = `
+    <div class="missing-card" onclick="switchMissingTab('keys')">
+      <div class="missing-card-label">No Key Number</div>
+      <div class="missing-card-count">${noKey.length}</div>
+      <div class="missing-card-sub">${((noKey.length/props.length)*100).toFixed(1)}% of portfolio</div>
+    </div>
+    <div class="missing-card" onclick="switchMissingTab('inspected')">
+      <div class="missing-card-label">Never Inspected</div>
+      <div class="missing-card-count">${neverInspected.length}</div>
+      <div class="missing-card-sub">No inspection on record</div>
+    </div>
+    <div class="missing-card" onclick="switchMissingTab('stale')">
+      <div class="missing-card-label">Not Inspected 12m+</div>
+      <div class="missing-card-count">${stale12m.length}</div>
+      <div class="missing-card-sub">Overdue for inspection</div>
+    </div>
+    <div class="missing-card" onclick="switchMissingTab('expiry')">
+      <div class="missing-card-label">No Expiry Date</div>
+      <div class="missing-card-count">${noExpiry.length}</div>
+      <div class="missing-card-sub">Subscription date missing</div>
+    </div>
+    <div class="missing-card" onclick="switchMissingTab('noncompliant')">
+      <div class="missing-card-label">Non-Compliant</div>
+      <div class="missing-card-count" style="color:var(--red)">${nonCompliant.length}</div>
+      <div class="missing-card-sub">Marked as non-compliant</div>
+    </div>
+  `;
+
+  // populate agent filter
+  populateAllDropdowns();
+  switchMissingTab(currentMissingTab);
+}
+
+function switchMissingTab(tab) {
+  currentMissingTab = tab;
+  document.querySelectorAll('[id^="md-tab-"]').forEach(t => t.classList.remove('active'));
+  const el = document.getElementById('md-tab-' + tab);
+  if (el) el.classList.add('active');
+  renderMissingTab();
+}
+
+function renderMissingTab() {
+  const allProps = getProps();
+  // Inactive properties excluded from missing/overdue reports
+  const props = allProps.filter(p => p.active !== 'NO');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const agent = document.getElementById('md-agent-filter')?.value||'';
+  const tab = currentMissingTab;
+
+  const titles = { keys:'Missing Key Numbers', inspected:'Never Inspected', stale:'Not Inspected 12+ Months', expiry:'No Expiry Date', noncompliant:'Non-Compliant Properties' };
+  document.getElementById('md-table-title').textContent = titles[tab]||'';
+
+  let filtered = [...props];
+  if (agent) filtered = filtered.filter(p => p.client === agent);
+  if (tab === 'keys') filtered = filtered.filter(p => keyIsMissing(p.key));
+  else if (tab === 'inspected') filtered = filtered.filter(p => !parseDate(p.lastInspected));
+  else if (tab === 'stale') filtered = filtered.filter(p => { const d=parseDate(p.lastInspected); return d && (today-d)/86400000 > 365; });
+  else if (tab === 'expiry') filtered = filtered.filter(p => !parseDate(p.subscriptionExpires));
+  else if (tab === 'noncompliant') filtered = filtered.filter(p => p.compliant === 'NO');
+
+  document.getElementById('md-thead-row').innerHTML = '<th>ID</th><th>Address</th><th>Agent</th><th>Key #</th><th>Last Inspected</th><th>Expires</th><th>Compliant</th><th>Edit</th>';
+
+  const total = filtered.length;
+  const start = (mdPage-1)*PAGE_SIZE, slice = filtered.slice(start, start+PAGE_SIZE);
+  document.getElementById('md-table').innerHTML = slice.map(p => `<tr>
+    <td class="mono" style="font-size:11px;color:var(--accent)">${p.propId||'—'}</td>
+    <td>${p.address}</td><td>${p.client}</td>
+    <td class="mono editable-cell" title="Click to edit" onclick="inlineEdit(this,'${p.propId||p.id}','key','${(p.key||'').replace(/'/g,"\'")}');renderMissingTab()">${p.key||'<span style="color:var(--text3)">add key</span>'}</td>
+    <td class="mono editable-cell" title="Click to edit" onclick="inlineEdit(this,'${p.propId||p.id}','lastInspected','${p.lastInspected||''}');renderMissingTab()">${formatDate(p.lastInspected)}</td>
+    <td class="mono">${formatDate(p.subscriptionExpires)}</td>
+    <td><span class="badge ${p.compliant==='YES'?'yes':'no'}">${p.compliant||'?'}</span></td>
+    <td><button class="btn btn-secondary btn-sm" onclick="openEditByPropId('${p.propId||p.id}')">Edit</button></td>
+  </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--text3);padding:20px">No items — great work!</td></tr>';
+
+  renderPagination('md-pagination', mdPage, total, PAGE_SIZE, p => { mdPage=p; renderMissingTab(); });
+}
+
+function exportMissingData() {
+  const allProps = getProps();
+  const props = allProps.filter(p => p.active !== 'NO');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const agent = document.getElementById('md-agent-filter')?.value||'';
+  const tab = currentMissingTab;
+  let filtered = [...props];
+  if (agent) filtered = filtered.filter(p => p.client === agent);
+  if (tab === 'keys') filtered = filtered.filter(p => !p.key || p.key === '');
+  else if (tab === 'inspected') filtered = filtered.filter(p => !parseDate(p.lastInspected));
+  else if (tab === 'stale') filtered = filtered.filter(p => { const d=parseDate(p.lastInspected); return d && (today-d)/86400000 > 365; });
+  else if (tab === 'expiry') filtered = filtered.filter(p => !parseDate(p.subscriptionExpires));
+  else if (tab === 'noncompliant') filtered = filtered.filter(p => p.compliant === 'NO');
+  exportFilteredCSV(filtered, `compass_missing_${tab}_${new Date().toISOString().slice(0,10)}.csv`);
+}
+
+// ===== INLINE EDITING =====
+function inlineEdit(cell, propId, field, currentVal) {
+  if (cell.querySelector('input')) return;
+  const isDate = field === 'lastInspected' || field === 'subscriptionExpires' || field === 'scheduled';
+  const input = document.createElement('input');
+  input.type = isDate ? 'date' : 'text';
+  input.className = 'inline-edit-input';
+  input.value = isDate ? dateToInput(currentVal) : currentVal;
+  cell.innerHTML = '';
+  cell.appendChild(input);
+  input.focus();
+
+  function save() {
+    const newVal = isDate ? formatDateForStore(input.value) : input.value.trim();
+    const props = getProps();
+    const idx = props.findIndex(p => (p.propId||p.id) === String(propId));
+    if (idx >= 0) {
+      props[idx][field] = newVal;
+      setProps(props);
+      updateBadges();
+      showToast(`Updated!`, 'success');
+    }
+    // Re-render the cell
+    if (isDate) cell.textContent = formatDate(newVal);
+    else cell.innerHTML = newVal || '<span style="color:var(--text3)">click to add</span>';
+  }
+
+  input.addEventListener('blur', save);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); save(); }
+    if (e.key === 'Escape') {
+      cell.innerHTML = isDate ? formatDate(currentVal) : (currentVal || '<span style="color:var(--text3)">click to add</span>');
+    }
+  });
+}
+
+// ===== BULK UPDATE =====
+function updateBulkBar() {
+  const checked = document.querySelectorAll('.prop-checkbox:checked');
+  const bar = document.getElementById('bulk-bar');
+  const count = document.getElementById('bulk-count');
+  if (checked.length > 0) {
+    bar.classList.add('visible');
+    count.textContent = checked.length + ' selected';
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+function toggleSelectAll() {
+  const master = document.getElementById('select-all-props');
+  document.querySelectorAll('.prop-checkbox').forEach(cb => { cb.checked = master.checked; });
+  updateBulkBar();
+}
+
+function clearBulkSelection() {
+  document.querySelectorAll('.prop-checkbox').forEach(cb => cb.checked = false);
+  const master = document.getElementById('select-all-props');
+  if (master) master.checked = false;
+  document.getElementById('bulk-bar').classList.remove('visible');
+}
+
+function applyBulkUpdate() {
+  const field = document.getElementById('bulk-field').value;
+  const value = document.getElementById('bulk-value').value.trim();
+  if (!field) { showToast('Select a field to update', 'error'); return; }
+  if (!value) { showToast('Enter a value', 'error'); return; }
+
+  const checked = [...document.querySelectorAll('.prop-checkbox:checked')].map(cb => cb.dataset.propid);
+  if (checked.length === 0) { showToast('No properties selected', 'error'); return; }
+
+  const isDate = ['lastInspected','subscriptionExpires','scheduled'].includes(field);
+  const storedVal = isDate ? formatDateForStore(value) : value;
+
+  const props = getProps();
+  let updated = 0;
+  checked.forEach(propId => {
+    const idx = props.findIndex(p => (p.propId||p.id) === propId);
+    if (idx >= 0) { props[idx][field] = storedVal; updated++; }
+  });
+  setProps(props);
+  updateBadges();
+  clearBulkSelection();
+  renderProperties();
+  showToast(`Updated ${updated} properties`, 'success');
+}
+
+// ===== START =====
+document.addEventListener('DOMContentLoaded', init);
+
+</script>
+</body>
+</html>
