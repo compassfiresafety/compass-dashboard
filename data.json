@@ -5134,13 +5134,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "24/08/2026",
-    "lastInspected": "3/03/2026",
+    "subscriptionExpires": "28/08/2026",
+    "lastInspected": "02/03/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Hallway Yes 02/2034"
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Hallway Yes 02/2034",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2338",
