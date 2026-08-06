@@ -402,16 +402,28 @@ const HISTORY_API = 'https://api.github.com/repos/compassfiresafety/compass-dash
 let _currentPropId = null;
 
 async function loadHistory() {
+  const debugEl = document.getElementById('m-h-list');
   try {
+    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:#64748b">Fetching from GitHub...</div>';
+    const tok = atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join('');
     const res = await fetch(HISTORY_API + '?t=' + Date.now(), {
-      headers: { 'Authorization': 'token ' + atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join(''), 'Accept': 'application/vnd.github.v3+json' }
+      headers: { 'Authorization': 'token ' + tok, 'Accept': 'application/vnd.github.v3+json' }
     });
+    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:#64748b">Response: ' + res.status + '</div>';
     if (res.status === 404) return { data: {}, sha: null };
+    if (!res.ok) {
+      if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:red">HTTP Error: ' + res.status + '</div>';
+      throw new Error('HTTP ' + res.status);
+    }
     const meta = await res.json();
-    const data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(meta.content.replace(/\n/g, '')), c => c.charCodeAt(0))));
+    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:#64748b">Decoding content...</div>';
+    const raw = atob(meta.content.replace(/\n/g, ''));
+    const data = JSON.parse(raw);
     localStorage.setItem('compass_history', JSON.stringify(data));
+    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:green">Loaded ' + Object.keys(data).length + ' records</div>';
     return { data, sha: meta.sha };
   } catch(e) {
+    if (debugEl) debugEl.innerHTML = '<div style="padding:10px;font-size:11px;color:red">Error: ' + e.message + '</div>';
     const cached = localStorage.getItem('compass_history');
     return { data: cached ? JSON.parse(cached) : {}, sha: null };
   }
