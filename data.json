@@ -12642,13 +12642,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "20/08/2026",
-    "lastInspected": "29/07/2026",
+    "subscriptionExpires": "21/08/2026",
+    "lastInspected": "28/07/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5085",
