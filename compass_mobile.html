@@ -359,16 +359,13 @@ let _currentPropId = null;
 
 async function loadHistory() {
   try {
-    // Raw URL - no auth needed for public repo, returns plain JSON directly
-    const url = 'https://raw.githubusercontent.com/compassfiresafety/compass-dashboard/main/history.json?t=' + Date.now();
-    const res = await fetch(url);
+    const res = await fetch('https://raw.githubusercontent.com/compassfiresafety/compass-dashboard/main/history.json?t=' + Date.now());
     if (res.status === 404) return { data: {}, sha: null };
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     localStorage.setItem('compass_history', JSON.stringify(data));
     return { data, sha: localStorage.getItem('compass_history_sha') };
   } catch(e) {
-    console.warn('loadHistory failed:', e);
     const cached = localStorage.getItem('compass_history');
     return { data: cached ? JSON.parse(cached) : {}, sha: null };
   }
