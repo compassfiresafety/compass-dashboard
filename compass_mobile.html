@@ -403,46 +403,19 @@ let _currentPropId = null;
 
 async function loadHistory() {
   try {
-    // Use raw URL - no auth needed, no base64 decoding, works on all browsers
-    const res = await fetch('https://raw.githubusercontent.com/compassfiresafety/compass-dashboard/main/history.json?t=' + Date.now());
+    // Raw URL - no auth needed for public repo, returns plain JSON directly
+    const url = 'https://raw.githubusercontent.com/compassfiresafety/compass-dashboard/main/history.json?t=' + Date.now();
+    const res = await fetch(url);
     if (res.status === 404) return { data: {}, sha: null };
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     localStorage.setItem('compass_history', JSON.stringify(data));
-    // Get SHA separately for saves (needed to update file)
-    const sha = localStorage.getItem('compass_history_sha');
-    return { data, sha };
+    return { data, sha: localStorage.getItem('compass_history_sha') };
   } catch(e) {
     console.warn('loadHistory failed:', e);
     const cached = localStorage.getItem('compass_history');
     return { data: cached ? JSON.parse(cached) : {}, sha: null };
   }
-}
-
-function saveHistoryAsync(data, sha) {
-  localStorage.setItem('compass_history', JSON.stringify(data));
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-  const body = { message: 'Update property history', content, branch: 'main' };
-  if (sha) body.sha = sha;
-  fetch(HISTORY_API, {
-    method: 'PUT',
-    headers: { 'Authorization': 'token ' + atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join(''), 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
-  }).then(res => { if (res.ok) return res.json(); throw new Error(res.status); })
-    .then(result => { localStorage.setItem('compass_history_sha', result.content.sha); })
-    .catch(e => console.warn('History save failed:', e));
-}
-
-function switchMobileTab(tab) {
-  const detBtn = document.getElementById('m-tab-details');
-  const hisBtn = document.getElementById('m-tab-history');
-  document.getElementById('d-body').style.display = tab === 'details' ? '' : 'none';
-  document.getElementById('m-history-panel').style.display = tab === 'history' ? '' : 'none';
-  detBtn.style.color = tab === 'details' ? '#f97316' : '#64748b';
-  detBtn.style.borderBottomColor = tab === 'details' ? '#f97316' : 'transparent';
-  hisBtn.style.color = tab === 'history' ? '#f97316' : '#64748b';
-  hisBtn.style.borderBottomColor = tab === 'history' ? '#f97316' : 'transparent';
-  if (tab === 'history') renderMobileHistoryList();
 }
 
 async function renderMobileHistoryList() {
