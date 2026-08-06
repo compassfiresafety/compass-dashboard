@@ -207,28 +207,19 @@ let DATA = [];
 
 async function loadData() {
   try {
-    const res = await fetch('https://api.github.com/repos/compassfiresafety/compass-dashboard/contents/data.json', {
-      headers: {
-        'Authorization': 'token ' + atob('bXV5d1EySTl0Qmw3cWNYY3VEVHlaQ05CVGlZb2F5V0Z5OTBWX3BoZw==').split('').reverse().join('') + '',
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    });
-    if (!res.ok) throw new Error('API failed: ' + res.status);
-    const meta = await res.json();
-    const decoded = decodeURIComponent(escape(atob(meta.content.replace(/\n/g, ''))));
-    DATA = JSON.parse(decoded);
+    // Raw URL - no auth needed for public repo
+    const res = await fetch('https://raw.githubusercontent.com/compassfiresafety/compass-dashboard/main/data.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    DATA = await res.json();
     localStorage.setItem('compass_mobile_data', JSON.stringify(DATA));
     document.getElementById('loading-msg').style.display = 'none';
     populateAgents();
     renderStats();
     render();
   } catch(e) {
-    console.warn('GitHub fetch failed:', e);
-    // Try localStorage cache
+    console.warn('loadData failed:', e);
     const cached = localStorage.getItem('compass_mobile_data');
-    if (cached) {
-      DATA = JSON.parse(cached);
-    }
+    if (cached) DATA = JSON.parse(cached);
     document.getElementById('loading-msg').textContent = DATA.length ? 'Offline — showing cached data' : 'Could not load data';
     populateAgents();
     renderStats();
@@ -236,42 +227,7 @@ async function loadData() {
   }
 }
 
-const today = new Date(); today.setHours(0,0,0,0);
-let currentTab = 'all';
-let searchTerm = '';
 
-function parseDate(s) {
-  if (!s) return null;
-  const parts = s.trim().split('/');
-  if (parts.length === 3) {
-    const [d, m, y] = parts;
-    const date = new Date(parseInt(y), parseInt(m)-1, parseInt(d));
-    return isNaN(date.getTime()) ? null : date;
-  }
-  return null;
-}
-
-function daysDiff(dateStr) {
-  const d = parseDate(dateStr);
-  if (!d) return null;
-  return Math.round((d - today) / 86400000);
-}
-
-function fmtDate(s) {
-  const d = parseDate(s);
-  if (!d) return '—';
-  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
-}
-
-function getPropStatus(p) {
-  const diff = daysDiff(p.subscriptionExpires);
-  if (diff === null) return 'unknown';
-  if (diff < 0) return 'overdue';
-  if (diff <= 30) return 'due30';
-  return 'ok';
-}
-
-// Filter active only for risk views - computed dynamically
 function getActiveProps() {
   return DATA.filter(p => p.active === 'YES');
 }
