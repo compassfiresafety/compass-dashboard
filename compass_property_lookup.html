@@ -220,7 +220,7 @@ function render() {
       else badge='<span class="badge grey">Exp '+fmtDate(p.subscriptionExpires)+'</span>';
       const hCount=(HISTORY[p.propId||p.id]||[]).length;
       const hBadge=hCount>0?'<span class="badge grey">📋 '+hCount+'</span>':'';
-      return '<div class="prop-card '+status+'" onclick="showDetail(''+( p.id)+'')">'
+      return '<div class="prop-card '+status+'" onclick="showDetail(\"'+p.id+'\")">' +
         +'<div class="prop-address">'+p.address+'</div>'
         +'<div class="prop-meta"><span class="badge agent">'+p.client+'</span>'+badge+hBadge+'</div></div>';
     }).join('') + (props.length>100?'<div class="results-count" style="text-align:center;padding:12px">Showing 100 of '+props.length+' — refine search</div>':'');
@@ -267,7 +267,7 @@ function renderHistory() {
     return '<div class="history-entry"><div class="h-bar" style="background:'+c+'"></div>'
       +'<div style="flex:1"><div><span class="h-date">'+d+'/'+m+'/'+y+'</span> <span class="h-type" style="color:'+c+'">'+e.type+'</span></div>'
       +(e.notes?'<div class="h-notes">'+e.notes+'</div>':'')+'</div>'
-      +'<button class="h-del" onclick="delEntry(''+e.id+'');event.stopPropagation()">✕</button></div>';
+      +'<button class="h-del" onclick="delEntry(\"'+e.id+'\");event.stopPropagation()">✕</button></div>';
   }).join('');
 }
 
