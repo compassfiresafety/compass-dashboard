@@ -3299,7 +3299,7 @@ async function loadHistory() {
     if (res.status === 404) { _history = {}; return _history; }
     const meta = await res.json();
     _historySHA = meta.sha;
-    _history = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g, '')))));
+    _history = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(meta.content.replace(/\n/g, '')), c => c.charCodeAt(0))));
     return _history;
   } catch(e) {
     // Try localStorage cache
