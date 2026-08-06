@@ -281,13 +281,7 @@ async function addEntry() {
   const count=HISTORY[currentPropId].length;
   document.getElementById('dt-history').textContent='📋 History ('+count+')';
   renderHistory();
-  // Save to GitHub
-  try {
-    const shaRes=await fetch(HISTORY_API,{headers:{'Authorization':'token '+GT,'Accept':'application/vnd.github.v3+json'}});
-    const shaMeta=await shaRes.json();
-    const content=btoa(unescape(encodeURIComponent(JSON.stringify(HISTORY,null,2))));
-    await fetch(HISTORY_API,{method:'PUT',headers:{'Authorization':'token '+GT,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify({message:'Add history entry',content,branch:'main',sha:shaMeta.sha})});
-  }catch(e){console.warn('Save failed:',e);}
+  // History saved locally only
 }
 
 async function delEntry(entryId) {
