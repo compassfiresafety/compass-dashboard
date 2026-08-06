@@ -220,14 +220,14 @@ async function refreshHistory() {
   } catch(e) { console.warn('History refresh failed:', e); }
 }
 
-async function loadData() {
-  // Data already embedded - just render immediately
+function loadData() {
+  // Data already embedded - render immediately
   document.getElementById('loading-msg').style.display = 'none';
   populateAgents();
   renderStats();
   render();
-  // Refresh history in background
-  refreshHistory();
+  // Refresh history in background (non-blocking)
+  setTimeout(refreshHistory, 1000);
 }
 
 
