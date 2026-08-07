@@ -7186,13 +7186,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "1/11/2026",
-    "lastInspected": "2/07/2025",
+    "subscriptionExpires": "31/10/2026",
+    "lastInspected": "07/08/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hall Yes 06/2033"
+    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hall Yes 06/2033",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411015_3172",
