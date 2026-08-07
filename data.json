@@ -4829,13 +4829,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "14/08/2027",
-    "lastInspected": "10/06/2025",
+    "subscriptionExpires": "13/08/2027",
+    "lastInspected": "09/06/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 11/2030 $0.00"
+    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 11/2030 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2202",
