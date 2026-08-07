@@ -4845,13 +4845,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "15/08/2027",
-    "lastInspected": "27/02/2025",
+    "subscriptionExpires": "14/08/2027",
+    "lastInspected": "26/02/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "WiFi",
-    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Living area Exp 11/2031 $0.00"
+    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Living area Exp 11/2031 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2207",
