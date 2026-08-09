@@ -5384,15 +5384,16 @@
     "client": "Ocean Realty",
     "address": "108 Hindes St, Lota QLD 4179",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$115",
-    "subscriptionExpires": "3/09/2026",
-    "lastInspected": "3/09/2025",
+    "subscriptionExpires": "02/09/2026",
+    "lastInspected": "02/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Upstairs Landing Yes 06/2031"
+    "alarmNotes": "NO LONGER OCEAN",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2436",
