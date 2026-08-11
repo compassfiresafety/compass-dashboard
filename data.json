@@ -5256,15 +5256,16 @@
     "client": "Red Rocket Realty",
     "address": "4 Myra St Birkdale QLD",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$125",
-    "subscriptionExpires": "30/08/2026",
-    "lastInspected": "17/09/2025",
+    "subscriptionExpires": "29/08/2026",
+    "lastInspected": "16/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Living Room Yes 08/2031"
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Living Room Yes 08/2031",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2383",
