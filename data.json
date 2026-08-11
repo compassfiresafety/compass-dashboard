@@ -4266,13 +4266,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "06/08/2026",
-    "lastInspected": "29/07/2026",
+    "subscriptionExpires": "05/08/2027",
+    "lastInspected": "28/07/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Landing Yes 10/2031"
+    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Landing Yes 10/2031",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_1948",
