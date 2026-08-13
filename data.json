@@ -20545,5 +20545,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1786605999397",
+    "propId": "CFS-1282",
+    "address": "42/7 Forest St Wakerley",
+    "client": "Red Rocket Realty",
+    "key": "",
+    "active": "YES",
+    "cost": "$125",
+    "subscriptionExpires": "12/08/2027",
+    "lastInspected": "12/08/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 5,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
