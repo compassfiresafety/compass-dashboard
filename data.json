@@ -14735,13 +14735,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "26/08/2026",
-    "lastInspected": "06/11/2025",
+    "subscriptionExpires": "25/09/2026",
+    "lastInspected": "05/11/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5222",
