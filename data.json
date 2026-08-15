@@ -12646,13 +12646,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "14/08/2026",
-    "lastInspected": "10/08/2025",
+    "subscriptionExpires": "11/09/2026",
+    "lastInspected": "09/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5084",
