@@ -5491,13 +5491,14 @@
     "key": "26",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "8/09/2026",
-    "lastInspected": "8/09/2025",
+    "subscriptionExpires": "25/09/2026",
+    "lastInspected": "07/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hallway Yes 12/2030"
+    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hallway Yes 12/2030",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2490",
