@@ -5248,13 +5248,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "28/08/2026",
-    "lastInspected": "28/08/2025",
+    "subscriptionExpires": "27/08/2026",
+    "lastInspected": "27/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Downstairs Hallway Exp 07/2031 $0.00"
+    "alarmNotes": "240v Photo Smoke Alarm Downstairs Hallway Exp 07/2031 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2377",
