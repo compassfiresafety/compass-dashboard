@@ -15196,13 +15196,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "21/08/2026",
-    "lastInspected": "17/11/2025",
+    "subscriptionExpires": "21/09/2026",
+    "lastInspected": "16/11/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5254",
