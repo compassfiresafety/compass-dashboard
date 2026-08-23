@@ -16888,13 +16888,14 @@
     "key": "N/A",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "1/09/2026",
-    "lastInspected": "10/03/2026",
+    "subscriptionExpires": "31/08/2027",
+    "lastInspected": "09/03/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5370",
