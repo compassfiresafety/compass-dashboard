@@ -18047,13 +18047,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "18/09/2026",
-    "lastInspected": "17/09/2024",
+    "subscriptionExpires": "02/06/2027",
+    "lastInspected": "16/09/2024",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5463",
