@@ -4750,15 +4750,16 @@
     "client": "Red Rocket Realty",
     "address": "20/880 Rochedale Road Rochedale South QLD 4123",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$125",
-    "subscriptionExpires": "16/08/2026",
-    "lastInspected": "6/11/2024",
+    "subscriptionExpires": "15/08/2026",
+    "lastInspected": "05/11/2024",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Upstairs Hallway Exp 09/2020 $0.00"
+    "alarmNotes": "240v Photo Smoke Alarm Upstairs Hallway Exp 09/2020 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2178",
