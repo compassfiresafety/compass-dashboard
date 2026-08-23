@@ -5302,13 +5302,14 @@
     "key": "17",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "31/08/2026",
-    "lastInspected": "29/07/2025",
+    "subscriptionExpires": "30/08/2027",
+    "lastInspected": "28/07/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Living/Exit Exp 07/2031 $0.00"
+    "alarmNotes": "240v Photo Smoke Alarm Living/Exit Exp 07/2031 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2390",
