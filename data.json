@@ -11680,13 +11680,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "13/05/2027",
-    "lastInspected": "08/05/2025",
+    "subscriptionExpires": "12/05/2027",
+    "lastInspected": "07/05/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5007",
