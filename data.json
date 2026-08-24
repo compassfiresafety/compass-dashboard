@@ -5532,13 +5532,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "10/09/2026",
-    "lastInspected": "10/09/2025",
+    "subscriptionExpires": "09/09/2026",
+    "lastInspected": "09/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Hallway Yes 10/2031"
+    "alarmNotes": "1. 10 year lithium wireless alarm Hallway Yes 10/2031",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2501",
