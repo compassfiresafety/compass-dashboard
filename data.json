@@ -5788,13 +5788,14 @@
     "key": "265",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "19/09/2026",
-    "lastInspected": "01/04/2026",
+    "subscriptionExpires": "18/09/2026",
+    "lastInspected": "31/03/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2614",
