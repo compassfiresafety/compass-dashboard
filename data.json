@@ -2375,13 +2375,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "13/05/2027",
-    "lastInspected": "02/03/2026",
+    "subscriptionExpires": "12/05/2027",
+    "lastInspected": "01/03/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Entry Yes 03/2031"
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Entry Yes 03/2031",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411013_1057",
