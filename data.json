@@ -20611,5 +20611,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1787639734111",
+    "propId": "CFS-1283",
+    "address": "68 Alawoona St Redbank Plains",
+    "client": "Equity Property Management",
+    "key": "82",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "",
+    "lastInspected": "15/08/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 5,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
