@@ -20657,5 +20657,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1787739126977",
+    "propId": "CFS-1285",
+    "address": "30 Stanley Terrace, Wynnum QLD 4178",
+    "client": "Ocean Realty",
+    "key": "88",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "26/08/2027",
+    "lastInspected": "26/08/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
