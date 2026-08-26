@@ -20640,5 +20640,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1787739024970",
+    "propId": "CFS-1284",
+    "address": "25 MacLeay Cres, Tingalpa QLD 4173",
+    "client": "Ocean Realty",
+    "key": "122",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "26/08/2027",
+    "lastInspected": "26/08/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
