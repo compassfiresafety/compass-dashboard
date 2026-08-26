@@ -20677,5 +20677,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1787740262893",
+    "propId": "CFS-1286",
+    "address": "84 College Dr, Flagstone QLD 4280",
+    "client": "Equity Property Management",
+    "key": "",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "26/08/2027",
+    "lastInspected": "26/08/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
