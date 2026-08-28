@@ -1641,15 +1641,12 @@ async function loadFromGitHub() {
     localStorage.setItem(STORE_KEY, JSON.stringify(data));
     localStorage.setItem('compass_updated', new Date().toISOString());
     updateLastUpdated();
-    showToast('✅ ' + data.length + ' properties loaded', 'success');
     return data;
   } catch(e) {
-    console.warn('GitHub load failed, using local cache:', e);
     // Fall back to localStorage cache
     const cached = JSON.parse(localStorage.getItem(STORE_KEY) || '[]');
     if (cached.length > 0) {
       _propsCache = cached;
-      showToast('Using cached data (offline)', 'warn');
       return cached;
     }
     // Last resort — built-in data
@@ -1693,10 +1690,7 @@ async function saveToGitHub(data) {
     }
     const result = await res.json();
     _githubSHA = result.content.sha;
-    showToast('✅ Saved to GitHub', 'success');
   } catch(e) {
-    console.error('GitHub save failed:', e);
-    showToast('⚠️ Save to GitHub failed — data saved locally only', 'error');
   }
 }
 
@@ -3300,7 +3294,7 @@ function saveHistoryAsync(data, sha) {
       localStorage.setItem('compass_history_sha', result.content.sha);
       showToast('\u2705 History saved', 'success');
     })
-    .catch(e => showToast('History saved locally only', 'warn'));
+    .catch(e => console.warn('History save failed:', e));
 }
 
 // switchEditTab removed - history now shown inline
