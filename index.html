@@ -1529,81 +1529,58 @@
       Edit Property
       <button class="modal-close" onclick="closeModal('edit-modal')">✕</button>
     </div>
-    <!-- TABS -->
-    <div style="display:flex;gap:0;margin-bottom:12px;border-bottom:1px solid var(--border)">
-      <button id="em-tab-details" onclick="switchEditTab('details')" style="padding:6px 16px;font-size:12px;font-weight:600;border:none;background:none;color:var(--accent);border-bottom:2px solid var(--accent);cursor:pointer;font-family:Sora,sans-serif">Details</button>
-      <button id="em-tab-history" onclick="switchEditTab('history')" style="padding:6px 16px;font-size:12px;font-weight:600;border:none;background:none;color:var(--text2);border-bottom:2px solid transparent;cursor:pointer;font-family:Sora,sans-serif">📋 History</button>
+
+    <!-- SINGLE PAGE - Details + History -->
+    <div style="display:grid;gap:6px">
+      <input type="hidden" id="em-idx">
+      <input type="hidden" id="em-propid-hidden">
+      <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Address</label><input type="text" id="em-address" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-family:Sora,sans-serif;font-size:12px;outline:none;box-sizing:border-box"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Agent</label><input type="text" id="em-client" list="em-client-list" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"><datalist id="em-client-list"></datalist></div>
+        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Property ID</label><input type="text" id="em-propid" readonly style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;box-sizing:border-box"></div>
+        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Key #</label><input type="text" id="em-key" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Cost</label><input type="text" id="em-cost" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
+        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Active</label><select id="em-active" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"><option value="YES">YES</option><option value="NO">NO</option></select></div>
+        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Compliant</label><select id="em-compliant" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"><option value="YES">YES</option><option value="NO">NO</option></select></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:6px">
+        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Subscription Expires</label><input type="date" id="em-expires" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
+        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Last Inspected</label><input type="date" id="em-inspected" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
+        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Alarm Qty</label><input type="number" id="em-alarm-qty" min="0" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
+      </div>
+      <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Alarm Notes</label><textarea id="em-alarm-total" rows="2" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;resize:vertical;font-family:Sora,sans-serif;box-sizing:border-box"></textarea></div>
+      <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Property Notes</label><textarea id="em-notes" rows="2" placeholder="e.g. Tenant requests notice before entry. Key in lockbox code 1234." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;resize:vertical;font-family:Sora,sans-serif;box-sizing:border-box"></textarea></div>
     </div>
 
-    <!-- DETAILS TAB -->
-    <div id="em-panel-details">
-      <div style="display:grid;gap:6px">
-        <input type="hidden" id="em-idx">
-        <input type="hidden" id="em-propid-hidden">
-        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Address</label><input type="text" id="em-address" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-family:Sora,sans-serif;font-size:12px;outline:none;box-sizing:border-box"></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Agent</label><input type="text" id="em-client" list="em-client-list" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"><datalist id="em-client-list"></datalist></div>
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Property ID</label><input type="text" id="em-propid" readonly style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;box-sizing:border-box"></div>
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Key #</label><input type="text" id="em-key" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Cost</label><input type="text" id="em-cost" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Active</label><select id="em-active" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"><option value="YES">YES</option><option value="NO">NO</option></select></div>
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Compliant</label><select id="em-compliant" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"><option value="YES">YES</option><option value="NO">NO</option></select></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 80px;gap:6px">
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Subscription Expires</label><input type="date" id="em-expires" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Last Inspected</label><input type="date" id="em-inspected" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Scheduled</label><input type="date" id="em-scheduled" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
-          <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Alarm Qty</label><input type="number" id="em-alarm-qty" min="0" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box"></div>
-        </div>
-        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Alarm Notes</label><textarea id="em-alarm-total" rows="2" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;resize:vertical;font-family:Sora,sans-serif;box-sizing:border-box"></textarea></div>
-        <div><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Property Notes</label><textarea id="em-notes" rows="2" placeholder="e.g. Tenant requests notice before entry. Key in lockbox code 1234." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;resize:vertical;font-family:Sora,sans-serif;box-sizing:border-box"></textarea></div>
+    <!-- HISTORY INLINE -->
+    <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">📋 History</div>
+      <!-- Add Entry -->
+      <div style="display:grid;grid-template-columns:130px 1fr auto;gap:6px;align-items:end;margin-bottom:8px">
+        <input type="date" id="h-date" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box">
+        <select id="h-type" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box">
+          <option>Inspection</option><option>Subscription Invoice</option>
+          <option>Faulty Alarm</option><option>Alarm Repair</option>
+          <option>Alarm Replacement</option><option>Battery Replacement</option>
+          <option>Phone Call - Tenant</option><option>Phone Call - Agent</option>
+          <option>Tenant Contact</option><option>Agent Contact</option>
+          <option>No Access</option><option>Quote Issued</option><option>Other</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="addHistoryEntry()">+ Add</button>
       </div>
-      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px">
-        <button class="btn btn-danger btn-sm" onclick="deleteProperty()">Delete</button>
-        <button class="btn btn-secondary btn-sm" onclick="closeModal('edit-modal')">Cancel</button>
-        <button class="btn btn-primary btn-sm" onclick="saveEditProperty()">Save Changes</button>
+      <div style="margin-bottom:6px">
+        <input type="text" id="h-notes" placeholder="Notes (optional)" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box">
       </div>
+      <!-- History list -->
+      <div id="h-list" style="max-height:180px;overflow-y:auto"></div>
     </div>
 
-    <!-- HISTORY TAB -->
-    <div id="em-panel-history" style="display:none">
-      <!-- Add Entry Form -->
-      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px">
-        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">Add Entry</div>
-        <div style="display:grid;grid-template-columns:140px 1fr auto;gap:8px;align-items:end">
-          <div>
-            <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Date</label>
-            <input type="date" id="h-date" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box">
-          </div>
-          <div>
-            <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Type</label>
-            <select id="h-type" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box">
-              <option>Inspection</option>
-              <option>Subscription Invoice</option>
-              <option>Faulty Alarm</option>
-              <option>Alarm Repair</option>
-              <option>Alarm Replacement</option>
-              <option>Battery Replacement</option>
-              <option>Phone Call - Tenant</option>
-              <option>Phone Call - Agent</option>
-              <option>Tenant Contact</option>
-              <option>Agent Contact</option>
-              <option>No Access</option>
-              <option>Quote Issued</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <button class="btn btn-primary btn-sm" onclick="addHistoryEntry()" style="padding:5px 14px">+ Add</button>
-        </div>
-        <div style="margin-top:8px">
-          <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:2px">Notes (optional)</label>
-          <input type="text" id="h-notes" placeholder="e.g. Replaced 2 alarms, tenant present" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box">
-        </div>
-      </div>
-      <!-- History List -->
-      <div id="h-list" style="max-height:320px;overflow-y:auto"></div>
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn btn-danger btn-sm" onclick="deleteProperty()">Delete</button>
+      <button class="btn btn-secondary btn-sm" onclick="closeModal('edit-modal')">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="saveEditProperty()">Save Changes</button>
     </div>
   </div>
 </div>
@@ -3326,17 +3303,7 @@ function saveHistoryAsync(data, sha) {
     .catch(e => showToast('History saved locally only', 'warn'));
 }
 
-function switchEditTab(tab) {
-  document.getElementById('em-panel-details').style.display = tab === 'details' ? '' : 'none';
-  document.getElementById('em-panel-history').style.display = tab === 'history' ? '' : 'none';
-  const detBtn = document.getElementById('em-tab-details');
-  const hisBtn = document.getElementById('em-tab-history');
-  detBtn.style.color = tab === 'details' ? 'var(--accent)' : 'var(--text2)';
-  detBtn.style.borderBottomColor = tab === 'details' ? 'var(--accent)' : 'transparent';
-  hisBtn.style.color = tab === 'history' ? 'var(--accent)' : 'var(--text2)';
-  hisBtn.style.borderBottomColor = tab === 'history' ? 'var(--accent)' : 'transparent';
-  if (tab === 'history') renderHistoryList();
-}
+// switchEditTab removed - history now shown inline
 
 async function renderHistoryList() {
   const propId = document.getElementById('em-propid-hidden').value;
@@ -3389,7 +3356,7 @@ async function addHistoryEntry() {
   await saveHistory();
   renderHistoryList();
   const count = (history[propId] || []).length;
-  document.getElementById('em-tab-history').textContent = `📋 History (${count})`;
+
   showToast('Entry added', 'success');
 }
 
@@ -3402,7 +3369,7 @@ async function deleteHistoryEntry(propId, entryId) {
     saveHistoryAsync(history, sha);
     renderHistoryList();
     const count = (history[propId] || []).length;
-    document.getElementById('em-tab-history').textContent = count > 0 ? `📋 History (${count})` : '📋 History';
+  
   }
 }
 
@@ -3434,15 +3401,8 @@ function openEditModal(idx) {
   // Set today's date in history date picker
   document.getElementById('h-date').value = new Date().toISOString().split('T')[0];
 
-  // Show history count on tab
-  loadHistory().then(history => {
-    const count = (history[p.propId||p.id] || []).length;
-    const hisBtn = document.getElementById('em-tab-history');
-    hisBtn.textContent = count > 0 ? `📋 History (${count})` : '📋 History';
-  });
-
-  // Always start on Details tab
-  switchEditTab('details');
+  // Load history inline immediately
+  renderHistoryList();
 
   document.getElementById('edit-modal').classList.add('open');
 }
