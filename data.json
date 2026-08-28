@@ -20694,5 +20694,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1787955244357",
+    "propId": "CFS-1287",
+    "address": "38/2018 Wynnum Rd Wynnum West",
+    "client": "SQ Real Estate",
+    "key": "",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "",
+    "lastInspected": "27/08/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
