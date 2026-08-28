@@ -3393,7 +3393,6 @@ function openEditModal(idx) {
   document.getElementById('em-compliant').value = p.compliant||'YES';
   document.getElementById('em-expires').value = dateToInput(p.subscriptionExpires);
   document.getElementById('em-inspected').value = dateToInput(p.lastInspected);
-  document.getElementById('em-scheduled').value = dateToInput(p.scheduled);
   document.getElementById('em-alarm-qty').value = p.alarmCount||0;
   document.getElementById('em-alarm-total').value = (p.alarmNotes||'').replace(/\|/g,'\n');
   document.getElementById('em-notes').value = p.notes||'';
@@ -3427,7 +3426,6 @@ function saveEditProperty() {
   p.compliant = document.getElementById('em-compliant').value;
   p.subscriptionExpires = formatDateForStore(document.getElementById('em-expires').value);
   p.lastInspected = formatDateForStore(document.getElementById('em-inspected').value);
-  p.scheduled = formatDateForStore(document.getElementById('em-scheduled').value);
   p.alarmCount = parseInt(document.getElementById('em-alarm-qty').value)||0;
   p.alarmNotes = document.getElementById('em-alarm-total').value.replace(/\n/g,'|');
   p.notes = document.getElementById('em-notes').value.trim();
