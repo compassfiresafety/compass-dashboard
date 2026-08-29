@@ -10561,13 +10561,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "10/02/2027",
-    "lastInspected": "10/02/2026",
+    "subscriptionExpires": "09/02/2027",
+    "lastInspected": "02/09/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Downstairs Living Yes 08/2029"
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Downstairs Living Yes 08/2029",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411016_4563",
