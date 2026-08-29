@@ -19094,13 +19094,14 @@
     "key": "",
     "active": "YES",
     "cost": "110",
-    "subscriptionExpires": "07/12/2026",
-    "lastInspected": "04/06/2026",
+    "subscriptionExpires": "10/06/2027",
+    "lastInspected": "21/08/2026",
     "scheduled": "03/06/2026",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "CFS-1499",
