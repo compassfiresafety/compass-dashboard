@@ -5107,13 +5107,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "23/08/2026",
-    "lastInspected": "16/04/2025",
+    "subscriptionExpires": "22/08/2027",
+    "lastInspected": "08/08/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Bedroom 1 Exp 10/2030 $0.00"
+    "alarmNotes": "240v Photo Smoke Alarm Bedroom 1 Exp 10/2030 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2323",
