@@ -13199,13 +13199,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "01/05/2027",
-    "lastInspected": "04/09/2025",
+    "subscriptionExpires": "30/04/2027",
+    "lastInspected": "02/09/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5115",
