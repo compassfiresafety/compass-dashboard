@@ -13434,13 +13434,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "16/09/2026",
-    "lastInspected": "14/09/2025",
+    "subscriptionExpires": "15/09/2026",
+    "lastInspected": "13/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5129",
