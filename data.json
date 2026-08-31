@@ -11207,13 +11207,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "27/02/2027",
-    "lastInspected": "27/02/2026",
+    "subscriptionExpires": "26/02/2027",
+    "lastInspected": "26/02/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Downstairs Entry Yes 10/2035"
+    "alarmNotes": "1. 10 year lithium wireless alarm Downstairs Entry Yes 10/2035",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_4842",
