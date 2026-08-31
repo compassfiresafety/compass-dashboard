@@ -18302,13 +18302,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "15/09/2026",
-    "lastInspected": "01/10/2024",
+    "subscriptionExpires": "28/08/2027",
+    "lastInspected": "30/09/2024",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5478",
