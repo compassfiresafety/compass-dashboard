@@ -11477,13 +11477,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "08/12/2026",
-    "lastInspected": "20/03/2025",
+    "subscriptionExpires": "07/12/2026",
+    "lastInspected": "19/03/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_4988",
