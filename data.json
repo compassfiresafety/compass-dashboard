@@ -20737,5 +20737,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1788250854946",
+    "propId": "CFS-1288",
+    "address": "111 Colburn Avenue Victoria Point QLD 4165",
+    "client": "Harcourts Victoria Point",
+    "key": "",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "09/02/2027",
+    "lastInspected": "01/09/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
