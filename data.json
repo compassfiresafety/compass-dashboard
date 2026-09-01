@@ -1914,13 +1914,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "18/05/2027",
-    "lastInspected": "11/08/2025",
+    "subscriptionExpires": "17/05/2027",
+    "lastInspected": "10/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Entry Yes 07/2030"
+    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Entry Yes 07/2030",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411013_839",
