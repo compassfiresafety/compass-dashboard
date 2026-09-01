@@ -20754,5 +20754,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1788251133122",
+    "propId": "CFS-1289",
+    "address": "17 Base St Victoria Point QLD 4165",
+    "client": "Harcourts Victoria Point",
+    "key": "",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "01/09/2027",
+    "lastInspected": "01/09/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
