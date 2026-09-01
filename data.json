@@ -20771,5 +20771,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1788251325814",
+    "propId": "CFS-1290",
+    "address": "11 Kidman Cct, Thornlands QLD 4164",
+    "client": "Equity Property Management",
+    "key": "",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "01/09/2027",
+    "lastInspected": "01/09/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
