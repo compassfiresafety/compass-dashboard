@@ -6287,13 +6287,14 @@
     "key": "69",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "3/10/2026",
-    "lastInspected": "31/07/2025",
+    "subscriptionExpires": "02/10/2026",
+    "lastInspected": "30/07/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Kitchen / Dining Yes 08/2031"
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Kitchen / Dining Yes 08/2031",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2789",
