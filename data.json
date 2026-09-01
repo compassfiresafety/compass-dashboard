@@ -519,13 +519,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "11/03/2027",
-    "lastInspected": "25/06/2025",
+    "subscriptionExpires": "10/03/2027",
+    "lastInspected": "24/06/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Upstairs Hallway Yes 11/2034"
+    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Upstairs Hallway Yes 11/2034",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411012_291",
