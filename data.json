@@ -20789,5 +20789,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1788379325192",
+    "propId": "CFS-1291",
+    "address": "62/7 Wisp St Woodridge QLD 4114",
+    "client": "Red Rocket Realty",
+    "key": "",
+    "active": "YES",
+    "cost": "$125",
+    "subscriptionExpires": "",
+    "lastInspected": "02/09/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
