@@ -17816,13 +17816,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "15/09/2026",
-    "lastInspected": "02/04/2024",
+    "subscriptionExpires": "14/09/2027",
+    "lastInspected": "23/08/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5435",
