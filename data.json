@@ -20779,5 +20779,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1788418119962",
+    "propId": "CFS-1290",
+    "address": "4/66 Gainsborough St Moorooka QLD 4105",
+    "client": "Property Network",
+    "key": "",
+    "active": "YES",
+    "cost": "$110",
+    "subscriptionExpires": "03/09/2027",
+    "lastInspected": "03/09/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 3,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
