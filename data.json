@@ -5534,13 +5534,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "9/09/2026",
-    "lastInspected": "9/09/2025",
+    "subscriptionExpires": "08/09/2027",
+    "lastInspected": "08/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Upstairs Dining Room Yes 11/2034"
+    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Upstairs Dining Room Yes 11/2034",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2497",
