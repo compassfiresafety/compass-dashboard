@@ -11314,13 +11314,14 @@
     "key": "56",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "9/09/2026",
-    "lastInspected": "23/06/2025",
+    "subscriptionExpires": "08/09/2027",
+    "lastInspected": "22/06/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Upstairs Hall Yes 01/2032"
+    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Upstairs Hall Yes 01/2032",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_4885",
