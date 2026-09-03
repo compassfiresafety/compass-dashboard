@@ -1522,6 +1522,26 @@
   </div><!-- /main -->
 </div><!-- /app-shell -->
 
+<!-- HISTORY TYPES EDITOR MODAL -->
+<div class="modal-overlay" id="history-types-modal">
+  <div class="modal" style="width:420px;padding:16px;max-height:80vh">
+    <div class="modal-title" style="margin-bottom:10px;padding-bottom:8px">
+      ⚙️ Edit History Entry Types
+      <button class="modal-close" onclick="closeModal('history-types-modal')">✕</button>
+    </div>
+    <p style="font-size:11px;color:var(--text2);margin-bottom:12px">Add, remove or reorder the types available in the history dropdown.</p>
+    <div id="ht-list" style="max-height:320px;overflow-y:auto;margin-bottom:12px"></div>
+    <div style="display:flex;gap:6px">
+      <input type="text" id="ht-new-input" placeholder="New type name…" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none" onkeydown="if(event.key==='Enter')addHistoryType()">
+      <button class="btn btn-primary btn-sm" onclick="addHistoryType()">+ Add</button>
+    </div>
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between">
+      <button class="btn btn-secondary btn-sm" onclick="resetHistoryTypes()">Reset to defaults</button>
+      <button class="btn btn-primary btn-sm" onclick="closeModal('history-types-modal')">Done</button>
+    </div>
+  </div>
+</div>
+
 <!-- EDIT MODAL -->
 <div class="modal-overlay" id="edit-modal">
   <div class="modal" style="width:720px;padding:16px;max-height:92vh">
@@ -1561,13 +1581,8 @@
       <div style="display:grid;grid-template-columns:130px 1fr auto;gap:6px;align-items:end;margin-bottom:8px">
         <input type="date" id="h-date" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box">
         <select id="h-type" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none;box-sizing:border-box">
-          <option>Inspection</option><option>Subscription Invoice</option>
-          <option>Faulty Alarm</option><option>Alarm Repair</option>
-          <option>Alarm Replacement</option><option>Battery Replacement</option>
-          <option>Phone Call - Tenant</option><option>Phone Call - Agent</option>
-          <option>Tenant Contact</option><option>Agent Contact</option>
-          <option>No Access</option><option>Quote Issued</option><option>Other</option>
         </select>
+        <button class="btn btn-secondary btn-sm" onclick="openHistoryTypesEditor()" title="Edit entry types" style="padding:5px 8px">⚙️</button>
         <button class="btn btn-primary btn-sm" onclick="addHistoryEntry()">+ Add</button>
       </div>
       <div style="margin-bottom:6px">
@@ -3255,6 +3270,94 @@ function clearDataEntry() {
 }
 
 // ===== EDIT MODAL =====
+// ===== HISTORY ENTRY TYPES =====
+const DEFAULT_HISTORY_TYPES = [
+  'Inspection', 'Subscription Invoice', 'Faulty Alarm', 'Alarm Repair',
+  'Alarm Replacement', 'Battery Replacement', 'Phone Call - Tenant',
+  'Phone Call - Agent', 'Tenant Contact', 'Agent Contact',
+  'No Access', 'Quote Issued', 'Other'
+];
+
+function getHistoryTypes() {
+  try {
+    const saved = localStorage.getItem('compass_history_types');
+    return saved ? JSON.parse(saved) : [...DEFAULT_HISTORY_TYPES];
+  } catch(e) { return [...DEFAULT_HISTORY_TYPES]; }
+}
+
+function saveHistoryTypes(types) {
+  localStorage.setItem('compass_history_types', JSON.stringify(types));
+}
+
+function populateHistoryTypeDropdown() {
+  const sel = document.getElementById('h-type');
+  if (!sel) return;
+  const types = getHistoryTypes();
+  const current = sel.value;
+  sel.innerHTML = types.map(t => `<option${t === current ? ' selected' : ''}>${t}</option>`).join('');
+}
+
+function openHistoryTypesEditor() {
+  renderHistoryTypesList();
+  document.getElementById('history-types-modal').classList.add('open');
+}
+
+function renderHistoryTypesList() {
+  const types = getHistoryTypes();
+  const list = document.getElementById('ht-list');
+  if (!types.length) {
+    list.innerHTML = '<div style="text-align:center;padding:16px;color:var(--text3);font-size:12px">No types yet — add one below</div>';
+    return;
+  }
+  list.innerHTML = types.map((t, i) => `
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid var(--border)">
+      <span style="font-size:12px;flex:1">${t}</span>
+      <button onclick="moveHistoryType(${i},-1)" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:0 4px" title="Move up" ${i===0?'disabled':''}>↑</button>
+      <button onclick="moveHistoryType(${i},1)" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:0 4px" title="Move down" ${i===types.length-1?'disabled':''}>↓</button>
+      <button onclick="deleteHistoryType(${i})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;padding:0 4px" title="Delete">✕</button>
+    </div>`).join('');
+}
+
+function addHistoryType() {
+  const input = document.getElementById('ht-new-input');
+  const val = input.value.trim();
+  if (!val) return;
+  const types = getHistoryTypes();
+  if (types.includes(val)) { showToast('Type already exists', 'warn'); return; }
+  types.push(val);
+  saveHistoryTypes(types);
+  input.value = '';
+  renderHistoryTypesList();
+  populateHistoryTypeDropdown();
+  showToast('Type added', 'success');
+}
+
+function deleteHistoryType(idx) {
+  const types = getHistoryTypes();
+  types.splice(idx, 1);
+  saveHistoryTypes(types);
+  renderHistoryTypesList();
+  populateHistoryTypeDropdown();
+}
+
+function moveHistoryType(idx, dir) {
+  const types = getHistoryTypes();
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= types.length) return;
+  [types[idx], types[newIdx]] = [types[newIdx], types[idx]];
+  saveHistoryTypes(types);
+  renderHistoryTypesList();
+  populateHistoryTypeDropdown();
+}
+
+function resetHistoryTypes() {
+  if (!confirm('Reset to default types? Any custom types will be removed.')) return;
+  localStorage.removeItem('compass_history_types');
+  renderHistoryTypesList();
+  populateHistoryTypeDropdown();
+  showToast('Reset to defaults', 'success');
+}
+
 // ===== PROPERTY HISTORY =====
 const HISTORY_API = 'https://api.github.com/repos/compassfiresafety/compass-dashboard/contents/history.json';
 let _history = null;
@@ -3393,6 +3496,9 @@ function openEditModal(idx) {
 
   // Set today's date in history date picker
   document.getElementById('h-date').value = new Date().toISOString().split('T')[0];
+
+  // Populate type dropdown with current custom types
+  populateHistoryTypeDropdown();
 
   // Load history inline immediately
   renderHistoryList();
