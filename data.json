@@ -5649,13 +5649,14 @@
     "key": "16",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "13/09/2026",
-    "lastInspected": "16/07/2026",
+    "subscriptionExpires": "12/09/2027",
+    "lastInspected": "15/07/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Upstairs Top of Stairs Yes 03/2031"
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Upstairs Top of Stairs Yes 03/2031",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2551",
