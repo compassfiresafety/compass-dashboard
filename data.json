@@ -9665,13 +9665,14 @@
     "key": "65",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "11/09/2026",
-    "lastInspected": "23/03/2026",
+    "subscriptionExpires": "10/09/2027",
+    "lastInspected": "22/03/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "6",
+    "alarmCount": 6,
     "alarmBrand": "WiFi",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411016_4255",
