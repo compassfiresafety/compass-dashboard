@@ -6011,13 +6011,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "28/09/2026",
-    "lastInspected": "13/09/2023",
+    "subscriptionExpires": "27/09/2027",
+    "lastInspected": "12/09/2023",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Living Room Exp 03/2031 $0.00"
+    "alarmNotes": "240v Photo Smoke Alarm Living Room Exp 03/2031 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2685",
