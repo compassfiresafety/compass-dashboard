@@ -13743,15 +13743,16 @@
     "client": "Red Rocket Prime",
     "address": "9 Charlane Street, Underwood QLD",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$110",
-    "subscriptionExpires": "30/09/2026",
-    "lastInspected": "25/09/2025",
+    "subscriptionExpires": "29/09/2026",
+    "lastInspected": "24/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5150",
