@@ -5637,13 +5637,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "13/09/2026",
-    "lastInspected": "16/09/2025",
+    "subscriptionExpires": "12/09/2026",
+    "lastInspected": "15/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Living Room Yes 09/2032"
+    "alarmNotes": "1. 10 year lithium wireless alarm Living Room Yes 09/2032",
+    "notes": "pm5@redrocketrealty.com.au\nTeresa"
   },
   {
     "id": "prop_import_1775337411014_2541",
