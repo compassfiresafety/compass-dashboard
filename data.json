@@ -6087,18 +6087,19 @@
   {
     "id": "prop_import_1775337411014_2701",
     "propId": "prop_import_1775337411014_2701",
-    "client": "Red Rocket Realty",
+    "client": "No Longer Managed",
     "address": "32 Minutus Street Rochedale South QLD 4123",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$125",
-    "subscriptionExpires": "29/09/2026",
-    "lastInspected": "22/07/2025",
+    "subscriptionExpires": "28/09/2026",
+    "lastInspected": "21/07/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 05/2030"
+    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 05/2030",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2706",
