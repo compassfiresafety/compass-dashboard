@@ -5380,18 +5380,19 @@
   {
     "id": "prop_import_1775337411014_2404",
     "propId": "prop_import_1775337411014_2404",
-    "client": "Red Rocket Realty",
+    "client": "No Longer Managed",
     "address": "13 Yeates Crescent Meadowbrook QLD",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$125",
-    "subscriptionExpires": "1/09/2026",
-    "lastInspected": "15/08/2025",
+    "subscriptionExpires": "31/08/2026",
+    "lastInspected": "14/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v 9v Hallway Entry Exp08/2033"
+    "alarmNotes": "240v 9v Hallway Entry Exp08/2033",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2411",
