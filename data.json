@@ -20817,5 +20817,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1788498732435",
+    "propId": "CFS-1291",
+    "address": "2210/35 Tondara Ln, West End QLD 4101",
+    "client": "Cosmopoliton",
+    "key": "",
+    "active": "YES",
+    "cost": "$110",
+    "subscriptionExpires": "",
+    "lastInspected": "04/09/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
