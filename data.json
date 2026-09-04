@@ -6104,18 +6104,19 @@
   {
     "id": "prop_import_1775337411014_2706",
     "propId": "prop_import_1775337411014_2706",
-    "client": "Red Rocket Realty",
+    "client": "No Longer Managed",
     "address": "852 Rochedale Road, Rochedale South, QLD 4123",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$125",
-    "subscriptionExpires": "29/09/2026",
-    "lastInspected": "22/07/2025",
+    "subscriptionExpires": "28/09/2026",
+    "lastInspected": "21/07/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "WiFi",
-    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Hallway Exp 04/2031 $0.00"
+    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Hallway Exp 04/2031 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2710",
