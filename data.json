@@ -5498,18 +5498,19 @@
   {
     "id": "prop_import_1775337411014_2461",
     "propId": "prop_import_1775337411014_2461",
-    "client": "Red Rocket Realty",
+    "client": "No Longer Managed",
     "address": "8/22a Kumbari St Rochedale South QLD 4123",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$125",
-    "subscriptionExpires": "8/09/2026",
-    "lastInspected": "4/12/2024",
+    "subscriptionExpires": "07/09/2026",
+    "lastInspected": "03/12/2024",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 05/2031 $0.00"
+    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 05/2031 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2483",
