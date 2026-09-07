@@ -12815,13 +12815,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "02/12/2026",
-    "lastInspected": "18/08/2025",
+    "subscriptionExpires": "01/12/2026",
+    "lastInspected": "17/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5090",
