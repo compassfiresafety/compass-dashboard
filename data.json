@@ -20847,5 +20847,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1788766713391",
+    "propId": "CFS-1292",
+    "address": "24 Parkway St Kuraby QLD 4112",
+    "client": "Red Rocket Prime",
+    "key": "",
+    "active": "YES",
+    "cost": "$110",
+    "subscriptionExpires": "",
+    "lastInspected": "",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
