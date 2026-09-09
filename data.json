@@ -9785,13 +9785,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "01/02/2027",
-    "lastInspected": "01/02/2026",
+    "subscriptionExpires": "31/01/2027",
+    "lastInspected": "31/01/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Living Room Yes 12/2031"
+    "alarmNotes": "1. 10 year lithium wireless alarm Living Room Yes 12/2031",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411016_4307",
