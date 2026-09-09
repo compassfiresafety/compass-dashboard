@@ -20667,13 +20667,14 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "",
-    "lastInspected": "",
+    "subscriptionExpires": "07/09/2027",
+    "lastInspected": "07/09/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "CFS-1293",
