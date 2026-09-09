@@ -7845,13 +7845,14 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "27/11/2026",
-    "lastInspected": "7/01/2026",
+    "subscriptionExpires": "26/11/2026",
+    "lastInspected": "06/01/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Granny Flat Hallway Yes 06/2034"
+    "alarmNotes": "1. Photoelectric hardwired with rechargeable lithium battery back up Granny Flat Hallway Yes 06/2034",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411015_3409",
