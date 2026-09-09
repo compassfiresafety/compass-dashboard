@@ -8074,13 +8074,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "3/12/2026",
-    "lastInspected": "3/12/2025",
+    "subscriptionExpires": "02/12/2026",
+    "lastInspected": "02/12/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hallway Yes 12/2033"
+    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hallway Yes 12/2033",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411015_3520",
