@@ -1389,7 +1389,7 @@
           </div>
           <div class="table-wrap" id="edit-results-wrap">
             <table>
-              <thead><tr><th>Address</th><th>Agent</th><th>Last Inspected</th><th>Expires</th><th>Action</th></tr></thead>
+              <thead><tr><th>Address</th><th>Agent</th><th>Last Inspected</th><th>Expires</th><th>Last Activity</th><th>Action</th></tr></thead>
               <tbody id="edit-results-table"></tbody>
             </table>
           </div>
@@ -3204,7 +3204,7 @@ function switchDataTab(tab) {
   if (tab==='edit') renderEditSearch();
 }
 
-function renderEditSearch() {
+async function renderEditSearch() {
   const search = (document.getElementById('edit-search')?.value||'').toLowerCase();
   const agent = document.getElementById('edit-agent-filter')?.value||'';
   let props = getProps();
@@ -3212,15 +3212,30 @@ function renderEditSearch() {
   if (search) props = props.filter(p => (p.address||'').toLowerCase().includes(search) || (p.client||'').toLowerCase().includes(search));
   const tbody = document.getElementById('edit-results-table');
   if (!tbody) return;
+
+  // Load history for last activity column
+  const { data: history } = await loadHistory();
+
   tbody.innerHTML = props.slice(0,50).map(p => {
     const realIdx = getProps().findIndex(x => x.id === p.id);
+    const propId = p.propId || p.id;
+    const entries = (history[propId] || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+    let lastActivity = '<span style="color:var(--text3)">—</span>';
+    if (entries.length > 0) {
+      const e = entries[0];
+      const [y,m,d] = e.date.split('-');
+      const typeColors = {'Inspection':'var(--green)','Subscription Invoice':'var(--blue)','Faulty Alarm':'var(--red)','Alarm Repair':'var(--yellow)','No Access':'var(--red)'};
+      const color = typeColors[e.type] || 'var(--text2)';
+      lastActivity = `<span class="mono" style="font-size:11px">${d}/${m}/${y}</span> <span style="font-size:11px;font-weight:600;color:${color}">${e.type}</span>`;
+    }
     return `<tr>
       <td>${p.address}</td><td>${p.client}</td>
       <td class="mono">${formatDate(p.lastInspected)}</td>
       <td class="mono">${formatDate(p.subscriptionExpires)}</td>
+      <td>${lastActivity}</td>
       <td><button class="btn btn-secondary btn-sm" onclick="openEditModal(${realIdx})">Edit</button></td>
     </tr>`;
-  }).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px">Search to find properties</td></tr>';
+  }).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:20px">Search to find properties</td></tr>';
 }
 
 function saveNewProperty() {
