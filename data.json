@@ -20689,5 +20689,22 @@
     "alarmCount": "",
     "alarmBrand": "",
     "alarmNotes": ""
+  },
+  {
+    "id": "prop_1788949071906",
+    "propId": "CFS-1294",
+    "address": "555 Priestdale Rd, Rochedale South QLD 4123",
+    "client": "Ray White Springwood",
+    "key": "",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "",
+    "lastInspected": "07/09/2026",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 0,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
