@@ -3213,8 +3213,14 @@ async function renderEditSearch() {
   const tbody = document.getElementById('edit-results-table');
   if (!tbody) return;
 
-  // Load history for last activity column
-  const { data: history } = await loadHistory();
+  // Try to load history - fall back gracefully if unavailable
+  let history = {};
+  try {
+    const result = await loadHistory();
+    history = result.data || result || {};
+  } catch(e) { history = {}; }
+
+  const typeColors = {'Inspection':'var(--green)','Subscription Invoice':'var(--blue)','Faulty Alarm':'var(--red)','Alarm Repair':'var(--yellow)','No Access':'var(--red)'};
 
   tbody.innerHTML = props.slice(0,50).map(p => {
     const realIdx = getProps().findIndex(x => x.id === p.id);
@@ -3224,7 +3230,6 @@ async function renderEditSearch() {
     if (entries.length > 0) {
       const e = entries[0];
       const [y,m,d] = e.date.split('-');
-      const typeColors = {'Inspection':'var(--green)','Subscription Invoice':'var(--blue)','Faulty Alarm':'var(--red)','Alarm Repair':'var(--yellow)','No Access':'var(--red)'};
       const color = typeColors[e.type] || 'var(--text2)';
       lastActivity = `<span class="mono" style="font-size:11px">${d}/${m}/${y}</span> <span style="font-size:11px;font-weight:600;color:${color}">${e.type}</span>`;
     }
