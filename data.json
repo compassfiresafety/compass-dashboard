@@ -4871,13 +4871,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "15/08/2027",
-    "lastInspected": "15/09/2025",
+    "subscriptionExpires": "14/08/2027",
+    "lastInspected": "14/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Upstairs Loft / Bedroom 1 Exp 04/2030 $0.00"
+    "alarmNotes": "240v Photo Smoke Alarm Upstairs Loft / Bedroom 1 Exp 04/2030 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2214",
