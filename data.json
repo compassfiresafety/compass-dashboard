@@ -20715,5 +20715,22 @@
     "alarmBrand": "",
     "alarmNotes": "",
     "notes": ""
+  },
+  {
+    "id": "prop_1789026778739",
+    "propId": "CFS-1295",
+    "address": "15 Raelene Terrace, Springwood QLD 4127",
+    "client": "SQ Real Estate",
+    "key": "",
+    "active": "YES",
+    "cost": "$115",
+    "subscriptionExpires": "08/08/2027",
+    "lastInspected": "10/09/2027",
+    "scheduled": "",
+    "compliant": "YES",
+    "alarmCount": 5,
+    "alarmBrand": "",
+    "alarmNotes": "",
+    "notes": ""
   }
 ]
