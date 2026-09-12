@@ -6099,13 +6099,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "29/09/2026",
-    "lastInspected": "3/12/2025",
+    "subscriptionExpires": "28/09/2027",
+    "lastInspected": "02/12/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "WiFi",
-    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Upstairs Hallway Exp 10/2030 $0.00"
+    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Upstairs Hallway Exp 10/2030 $0.00",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2724",
