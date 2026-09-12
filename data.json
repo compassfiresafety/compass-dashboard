@@ -5883,13 +5883,14 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "26/09/2026",
-    "lastInspected": "16/04/2025",
+    "subscriptionExpires": "25/09/2027",
+    "lastInspected": "15/04/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Front hallway Exp 09/2030 240v Photo Smoke Alarm Bedroom 1 Exp 09/2030 240v Photo Smoke Alarm Bedroom 2 Exp 09/2030 240v Photo Smoke Alarm Bedroom 3 Exp 09/2030 240v Photo Smoke Alarm Bedroom 4 Exp 09/2030 240v Photo Smoke Alarm Rear Hallway Exp 09/2030"
+    "alarmNotes": "240v Photo Smoke Alarm Front hallway Exp 09/2030 240v Photo Smoke Alarm Bedroom 1 Exp 09/2030 240v Photo Smoke Alarm Bedroom 2 Exp 09/2030 240v Photo Smoke Alarm Bedroom 3 Exp 09/2030 240v Photo Smoke Alarm Bedroom 4 Exp 09/2030 240v Photo Smoke Alarm Rear Hallway Exp 09/2030",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2664",
