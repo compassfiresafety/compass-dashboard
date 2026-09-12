@@ -17007,15 +17007,16 @@
     "client": "Property Network",
     "address": "8 Kneller St Salisbury 4107",
     "key": "",
-    "active": "YES",
+    "active": "NO",
     "cost": "$110",
-    "subscriptionExpires": "15/09/2026",
-    "lastInspected": "14/09/2025",
+    "subscriptionExpires": "14/09/2026",
+    "lastInspected": "13/09/2025",
     "scheduled": "",
-    "compliant": "YES",
-    "alarmCount": "",
+    "compliant": "NO",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5380",
