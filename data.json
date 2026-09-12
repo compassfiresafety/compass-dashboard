@@ -5692,13 +5692,14 @@
     "key": "54",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "19/09/2026",
-    "lastInspected": "17/12/2025",
+    "subscriptionExpires": "18/09/2026",
+    "lastInspected": "16/12/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "1",
+    "alarmCount": 1,
     "alarmBrand": "Other",
-    "alarmNotes": ". Photoelectric hardwired with 9 volt battery back up Downstairs Garage /Laundry area Yes 06/2029"
+    "alarmNotes": ". Photoelectric hardwired with 9 volt battery back up Downstairs Garage /Laundry area Yes 06/2029",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411014_2589",
