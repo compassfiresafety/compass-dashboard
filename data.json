@@ -16465,13 +16465,14 @@
     "key": "N/A",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "16/09/2026",
-    "lastInspected": "9/02/2026",
+    "subscriptionExpires": "15/09/2027",
+    "lastInspected": "08/02/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": "",
+    "alarmCount": 0,
     "alarmBrand": "",
-    "alarmNotes": ""
+    "alarmNotes": "",
+    "notes": ""
   },
   {
     "id": "prop_import_1775337411017_5346",
