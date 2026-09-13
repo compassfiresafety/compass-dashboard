@@ -4871,14 +4871,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "13/08/2027",
-    "lastInspected": "13/09/2025",
+    "subscriptionExpires": "15/08/2027",
+    "lastInspected": "15/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Upstairs Loft / Bedroom 1 Exp 04/2030 $0.00",
-    "notes": ""
+    "alarmNotes": "240v Photo Smoke Alarm Upstairs Loft / Bedroom 1 Exp 04/2030 $0.00"
   },
   {
     "id": "prop_import_1775337411014_2214",
@@ -5032,14 +5031,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "19/07/2027",
-    "lastInspected": "28/02/2026",
+    "subscriptionExpires": "20/07/2027",
+    "lastInspected": "01/03/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hallway Yes 12/2031",
-    "notes": ""
+    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hallway Yes 12/2031"
   },
   {
     "id": "prop_import_1775337411014_2283",
@@ -5385,14 +5383,13 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "01/09/2027",
-    "lastInspected": "08/09/2026",
+    "subscriptionExpires": "4/09/2026",
+    "lastInspected": "4/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Hallway / Entry/ Exit Yes 11/2027",
-    "notes": ""
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Hallway / Entry/ Exit Yes 11/2027"
   },
   {
     "id": "prop_import_1775337411014_2440",
@@ -5530,14 +5527,13 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "09/09/2027",
-    "lastInspected": "09/09/2025",
+    "subscriptionExpires": "10/09/2026",
+    "lastInspected": "10/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Landing Yes 11/2032",
-    "notes": ""
+    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Landing Yes 11/2032"
   },
   {
     "id": "prop_import_1775337411014_2512",
@@ -5579,14 +5575,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "11/09/2027",
-    "lastInspected": "14/09/2025",
+    "subscriptionExpires": "12/09/2026",
+    "lastInspected": "15/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Living Room Yes 09/2032",
-    "notes": ""
+    "alarmNotes": "1. 10 year lithium wireless alarm Living Room Yes 09/2032"
   },
   {
     "id": "prop_import_1775337411014_2541",
@@ -5692,14 +5687,13 @@
     "key": "54",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "18/09/2026",
-    "lastInspected": "16/12/2025",
+    "subscriptionExpires": "19/09/2026",
+    "lastInspected": "17/12/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Other",
-    "alarmNotes": ". Photoelectric hardwired with 9 volt battery back up Downstairs Garage /Laundry area Yes 06/2029",
-    "notes": ""
+    "alarmNotes": ". Photoelectric hardwired with 9 volt battery back up Downstairs Garage /Laundry area Yes 06/2029"
   },
   {
     "id": "prop_import_1775337411014_2589",
@@ -5741,14 +5735,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "19/09/2027",
-    "lastInspected": "02/03/2026",
+    "subscriptionExpires": "20/09/2026",
+    "lastInspected": "3/03/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Upstairs Hallway Yes 11/2033",
-    "notes": ""
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Upstairs Hallway Yes 11/2033"
   },
   {
     "id": "prop_import_1775337411014_2607",
@@ -5774,14 +5767,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "19/09/2027",
-    "lastInspected": "02/03/2026",
+    "subscriptionExpires": "20/09/2026",
+    "lastInspected": "03/03/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Downstairs Living Area Yes 05/2034",
-    "notes": ""
+    "alarmNotes": "1. 10 year lithium wireless alarm Downstairs Living Area Yes 05/2034"
   },
   {
     "id": "prop_import_1775337411014_2618",
@@ -5887,14 +5879,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "25/09/2027",
-    "lastInspected": "15/04/2025",
+    "subscriptionExpires": "26/09/2026",
+    "lastInspected": "16/04/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Front hallway Exp 09/2030 240v Photo Smoke Alarm Bedroom 1 Exp 09/2030 240v Photo Smoke Alarm Bedroom 2 Exp 09/2030 240v Photo Smoke Alarm Bedroom 3 Exp 09/2030 240v Photo Smoke Alarm Bedroom 4 Exp 09/2030 240v Photo Smoke Alarm Rear Hallway Exp 09/2030",
-    "notes": ""
+    "alarmNotes": "240v Photo Smoke Alarm Front hallway Exp 09/2030 240v Photo Smoke Alarm Bedroom 1 Exp 09/2030 240v Photo Smoke Alarm Bedroom 2 Exp 09/2030 240v Photo Smoke Alarm Bedroom 3 Exp 09/2030 240v Photo Smoke Alarm Bedroom 4 Exp 09/2030 240v Photo Smoke Alarm Rear Hallway Exp 09/2030"
   },
   {
     "id": "prop_import_1775337411014_2664",
@@ -5936,14 +5927,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "27/09/2027",
-    "lastInspected": "14/08/2025",
+    "subscriptionExpires": "28/09/2026",
+    "lastInspected": "15/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "WiFi",
-    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Upstairs Hallway Exp 03/2031 $0.00",
-    "notes": ""
+    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Upstairs Hallway Exp 03/2031 $0.00"
   },
   {
     "id": "prop_import_1775337411014_2680",
@@ -5969,14 +5959,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "27/09/2027",
-    "lastInspected": "12/06/2025",
+    "subscriptionExpires": "28/09/2026",
+    "lastInspected": "13/06/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Living area Exp 06/2028 $0.00",
-    "notes": ""
+    "alarmNotes": "240v Photo Smoke Alarm Living area Exp 06/2028 $0.00"
   },
   {
     "id": "prop_import_1775337411014_2688",
@@ -5986,14 +5975,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "27/09/2027",
-    "lastInspected": "12/01/2026",
+    "subscriptionExpires": "28/09/2026",
+    "lastInspected": "13/01/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 04/2030 $0.00",
-    "notes": ""
+    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 04/2030 $0.00"
   },
   {
     "id": "prop_import_1775337411014_2692",
@@ -6003,14 +5991,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "26/09/2027",
-    "lastInspected": "27/08/2024",
+    "subscriptionExpires": "27/09/2026",
+    "lastInspected": "28/08/2024",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Upstairs Hallway Exp 11/2030 $0.00",
-    "notes": ""
+    "alarmNotes": "240v Photo Smoke Alarm Upstairs Hallway Exp 11/2030 $0.00"
   },
   {
     "id": "prop_import_1775337411014_2697",
@@ -6020,14 +6007,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "28/09/2027",
-    "lastInspected": "29/10/2024",
+    "subscriptionExpires": "29/09/2026",
+    "lastInspected": "30/10/2024",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Downstairs Dining Exp 06/2029 $0.00",
-    "notes": ""
+    "alarmNotes": "240v Photo Smoke Alarm Downstairs Dining Exp 06/2029 $0.00"
   },
   {
     "id": "prop_import_1775337411014_2701",
@@ -6069,14 +6055,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "28/09/2027",
-    "lastInspected": "15/06/2025",
+    "subscriptionExpires": "29/09/2026",
+    "lastInspected": "16/06/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 05/2031 $0.00",
-    "notes": ""
+    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 05/2031 $0.00"
   },
   {
     "id": "prop_import_1775337411014_2714",
@@ -6086,14 +6071,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "28/09/2027",
-    "lastInspected": "17/09/2025",
+    "subscriptionExpires": "29/09/2026",
+    "lastInspected": "18/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "240V Hardwired",
-    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 05/2029 $0.00",
-    "notes": ""
+    "alarmNotes": "240v Photo Smoke Alarm Hallway Exp 05/2029 $0.00"
   },
   {
     "id": "prop_import_1775337411014_2719",
@@ -6103,14 +6087,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "28/09/2027",
-    "lastInspected": "02/12/2025",
+    "subscriptionExpires": "29/09/2026",
+    "lastInspected": "3/12/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "WiFi",
-    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Upstairs Hallway Exp 10/2030 $0.00",
-    "notes": ""
+    "alarmNotes": "10 yr Lithium WiFi Photoelectric Smoke Alarm Upstairs Hallway Exp 10/2030 $0.00"
   },
   {
     "id": "prop_import_1775337411014_2724",
@@ -6136,14 +6119,13 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "21/09/2026",
-    "lastInspected": "21/09/2025",
+    "subscriptionExpires": "27/09/2026",
+    "lastInspected": "27/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Hallway Yes 08/2031",
-    "notes": ""
+    "alarmNotes": "1. 10 year lithium wireless alarm Hallway Yes 08/2031"
   },
   {
     "id": "prop_import_1775337411014_2738",
@@ -8089,14 +8071,13 @@
     "key": "",
     "active": "YES",
     "cost": "$125",
-    "subscriptionExpires": "02/12/2026",
-    "lastInspected": "02/12/2025",
+    "subscriptionExpires": "3/12/2026",
+    "lastInspected": "3/12/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hallway Yes 12/2033",
-    "notes": ""
+    "alarmNotes": "1. 10 year lithium wireless alarm Upstairs Hallway Yes 12/2033"
   },
   {
     "id": "prop_import_1775337411015_3520",
@@ -9802,14 +9783,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "31/01/2027",
-    "lastInspected": "31/01/2026",
+    "subscriptionExpires": "01/02/2027",
+    "lastInspected": "01/02/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Wireless Lithium",
-    "alarmNotes": "1. 10 year lithium wireless alarm Living Room Yes 12/2031",
-    "notes": ""
+    "alarmNotes": "1. 10 year lithium wireless alarm Living Room Yes 12/2031"
   },
   {
     "id": "prop_import_1775337411016_4307",
@@ -9947,14 +9927,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "01/02/2027",
-    "lastInspected": "01/02/2026",
+    "subscriptionExpires": "02/02/2027",
+    "lastInspected": "02/02/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 1,
+    "alarmCount": "1",
     "alarmBrand": "Other",
-    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Hallway Yes 12/2031",
-    "notes": ""
+    "alarmNotes": "1. Photoelectric hardwired with 9 volt battery back up Hallway Yes 12/2031"
   },
   {
     "id": "prop_import_1775337411016_4352",
@@ -12732,14 +12711,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "30/11/2026",
-    "lastInspected": "16/08/2025",
+    "subscriptionExpires": "01/12/2026",
+    "lastInspected": "17/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5090",
@@ -12893,14 +12871,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "20/09/2027",
-    "lastInspected": "16/08/2025",
+    "subscriptionExpires": "21/09/2026",
+    "lastInspected": "17/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5100",
@@ -13038,14 +13015,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "13/09/2027",
-    "lastInspected": "07/09/2026",
+    "subscriptionExpires": "17/09/2026",
+    "lastInspected": "25/08/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5109",
@@ -13263,14 +13239,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "09/09/2027",
-    "lastInspected": "07/09/2025",
+    "subscriptionExpires": "10/09/2027",
+    "lastInspected": "08/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5123",
@@ -15152,14 +15127,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "19/09/2027",
-    "lastInspected": "14/11/2025",
+    "subscriptionExpires": "21/09/2026",
+    "lastInspected": "16/11/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5254",
@@ -16465,14 +16439,13 @@
     "key": "N/A",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "15/09/2027",
-    "lastInspected": "08/02/2026",
+    "subscriptionExpires": "16/09/2026",
+    "lastInspected": "9/02/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5346",
@@ -16834,14 +16807,13 @@
     "key": "N/A",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "01/10/2027",
-    "lastInspected": "08/03/2026",
+    "subscriptionExpires": "02/10/2026",
+    "lastInspected": "09/03/2026",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5369",
@@ -17009,16 +16981,15 @@
     "client": "Property Network",
     "address": "8 Kneller St Salisbury 4107",
     "key": "",
-    "active": "NO",
+    "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "13/09/2026",
-    "lastInspected": "12/09/2025",
+    "subscriptionExpires": "15/09/2026",
+    "lastInspected": "14/09/2025",
     "scheduled": "",
-    "compliant": "NO",
-    "alarmCount": 0,
+    "compliant": "YES",
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5380",
@@ -17060,14 +17031,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "14/09/2027",
-    "lastInspected": "13/09/2025",
+    "subscriptionExpires": "15/09/2026",
+    "lastInspected": "14/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5383",
@@ -17077,14 +17047,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "14/09/2027",
-    "lastInspected": "11/09/2026",
+    "subscriptionExpires": "15/09/2026",
+    "lastInspected": "14/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5384",
@@ -17094,14 +17063,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "14/09/2027",
-    "lastInspected": "13/09/2025",
+    "subscriptionExpires": "15/09/2026",
+    "lastInspected": "14/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5385",
@@ -17367,14 +17335,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "12/09/2027",
-    "lastInspected": "11/09/2026",
+    "subscriptionExpires": "14/09/2026",
+    "lastInspected": "13/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5407",
@@ -17624,14 +17591,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "10/09/2027",
-    "lastInspected": "08/09/2025",
+    "subscriptionExpires": "11/09/2026",
+    "lastInspected": "09/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5426",
@@ -17673,14 +17639,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "14/09/2027",
-    "lastInspected": "11/09/2026",
+    "subscriptionExpires": "15/09/2026",
+    "lastInspected": "15/09/2025",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5431",
@@ -17882,14 +17847,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "14/09/2027",
-    "lastInspected": "11/09/2026",
+    "subscriptionExpires": "15/09/2026",
+    "lastInspected": "04/09/2024",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "prop_import_1775337411017_5452",
@@ -18908,7 +18872,7 @@
     "active": "YES",
     "cost": "$110",
     "subscriptionExpires": "02/01/2027",
-    "lastInspected": "27/06/2025",
+    "lastInspected": "28/06/2025",
     "scheduled": "",
     "compliant": "YES",
     "alarmCount": "",
@@ -18924,7 +18888,7 @@
     "active": "YES",
     "cost": "125",
     "subscriptionExpires": "07/02/2027",
-    "lastInspected": "25/11/2025",
+    "lastInspected": "24/02/2026",
     "scheduled": "",
     "compliant": "YES",
     "alarmCount": "4",
@@ -19768,7 +19732,7 @@
     "propId": "CFS-1242",
     "client": "Cosmopoliton",
     "address": "8/42 Nellie St Nundah",
-    "key": "N/A",
+    "key": "",
     "active": "YES",
     "cost": "$110",
     "subscriptionExpires": "24/07/2027",
@@ -20283,14 +20247,13 @@
     "key": "",
     "active": "YES",
     "cost": "$115",
-    "subscriptionExpires": "08/09/2027",
+    "subscriptionExpires": "10/09/2027",
     "lastInspected": "",
     "scheduled": "07/09/2026",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "CFS-1273",
@@ -20396,14 +20359,13 @@
     "key": "",
     "active": "YES",
     "cost": "$11",
-    "subscriptionExpires": "10/09/2027",
-    "lastInspected": "07/09/2026",
+    "subscriptionExpires": "11/09/2027",
+    "lastInspected": "08/09/2026",
     "scheduled": "11/09/2027",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "CFS-1280",
@@ -20634,7 +20596,7 @@
     "propId": "CFS-1291",
     "client": "Red Rocket Realty",
     "address": "62/7 Wisp St Woodridge QLD 4114",
-    "key": "N/A",
+    "key": "",
     "active": "YES",
     "cost": "$125",
     "subscriptionExpires": "",
@@ -20701,14 +20663,13 @@
     "key": "",
     "active": "YES",
     "cost": "$110",
-    "subscriptionExpires": "07/09/2027",
-    "lastInspected": "07/09/2026",
+    "subscriptionExpires": "",
+    "lastInspected": "",
     "scheduled": "",
     "compliant": "YES",
-    "alarmCount": 0,
+    "alarmCount": "",
     "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
+    "alarmNotes": ""
   },
   {
     "id": "CFS-1293",
@@ -20725,39 +20686,5 @@
     "alarmCount": "",
     "alarmBrand": "",
     "alarmNotes": ""
-  },
-  {
-    "id": "prop_1788949071906",
-    "propId": "CFS-1294",
-    "address": "555 Priestdale Rd, Rochedale South QLD 4123",
-    "client": "Ray White Springwood",
-    "key": "",
-    "active": "YES",
-    "cost": "$115",
-    "subscriptionExpires": "07/09/2027",
-    "lastInspected": "04/09/2026",
-    "scheduled": "",
-    "compliant": "YES",
-    "alarmCount": 0,
-    "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
-  },
-  {
-    "id": "prop_1789026778739",
-    "propId": "CFS-1295",
-    "address": "15 Raelene Terrace, Springwood QLD 4127",
-    "client": "SQ Real Estate",
-    "key": "",
-    "active": "YES",
-    "cost": "$115",
-    "subscriptionExpires": "06/08/2027",
-    "lastInspected": "08/09/2027",
-    "scheduled": "",
-    "compliant": "YES",
-    "alarmCount": 5,
-    "alarmBrand": "",
-    "alarmNotes": "",
-    "notes": ""
   }
 ]
